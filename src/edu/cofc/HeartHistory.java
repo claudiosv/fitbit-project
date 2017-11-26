@@ -6,11 +6,25 @@ import java.util.ArrayList;
  * Created by Claudio on 20/11/2017.
  */
 public class HeartHistory {
-    public ArrayList<HeartRate> heartRates = new ArrayList<>();
-    public HeartMonitor heartMonitor = new HeartMonitor();
+    private ArrayList<HeartRate> heartRates = new ArrayList<>();
+    public Heart heartMonitor = new Heart();
 
-    public void addHeartRate(HeartRate heartRate)
-    {
+    public HeartHistory() { }
 
+    /**
+     * Adds a heart rate to our history
+     * @param heartRate
+     */
+    public void addHeartRate(HeartRate heartRate) {
+        heartRates.add(heartRate);
+    }
+
+    /**
+     * Gets a heart rate from our history
+     * @param index
+     * @return
+     */
+    public HeartRate getHeartRate(int index) {
+        return heartRates.get(index);
     }
 }

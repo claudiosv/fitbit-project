@@ -62,5 +62,42 @@ public class Main {
 
          */
 
+        /* Heart Monitor
+            - Heart.startHeart will be called from pressing a button
+            - A thread should be created to constantly be reading the Heart.getHeartRate()
+            - Use this to update the UI
+            - Heart.stopHeart and Heart.resetHeart will be used to stop the heart monitor from buttons
+         */
+
+        /*
+        if(heartHistory.heartMonitor.startHeart()) {
+            Runnable testingThread = new Runnable() {
+                public void run() {
+                    try {
+                        for(int i = 0; i < 40; i++) {
+                            //Read for twenty seconds
+                            System.out.printf("Heart Rate (BPM): %f\n", heartHistory.heartMonitor.readHeartRate());
+
+                            Thread.sleep(500);
+                        }
+                    } catch (InterruptedException e) {
+                        //In case of an error, the step counter is stopped and reset but not saved
+                        heartHistory.heartMonitor.stopHeart();
+                        heartHistory.heartMonitor.resetHeart();
+                    }
+
+                    //Stop button pressed
+                    heartHistory.heartMonitor.stopHeart();
+
+                    //Saves button pressed, saves and resets
+                    heartHistory.addHeartRate(heartHistory.heartMonitor.saveHeartRate());
+                    heartHistory.heartMonitor.resetHeart();
+                }
+            };
+
+            Thread testThread = new Thread(testingThread);
+            testThread.start();
+        }
+        */
     }
 }
