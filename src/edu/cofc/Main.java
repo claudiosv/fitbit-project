@@ -16,37 +16,37 @@ public class Main {
             - Starts the step counter (constantly reading from the accelerometer)
             - Thread will be created to update the step count on screen
             - Stops the counter when the stop button is pressed
-            - When saved is pressed it will save the daily step count */
+            - When saved is pressed it will save the daily step count
+         */
 
         /*
-        stepHistory.stepCounter.startCounter();
+        if(stepHistory.stepCounter.startCounter()) {
+            Runnable testingThread = new Runnable() {
+                public void run() {
+                    try {
+                        //This will be a while(onStepCountScreen) {} using sleep for testing purposes
+                        //Update the text on screen
+                        Thread.sleep(2000);
+                        System.out.printf("Step Count: %d\n", stepHistory.stepCounter.readStepCount());
 
-        Runnable testingThread = new Runnable() {
-            public void run() {
-                try {
-                    //This will be a while(onStepCountScreen) {} using sleep for testing purposes
-                    //Update the text on screen
-                    Thread.sleep(2000);
-                    System.out.printf("Step Count: %d\n", stepHistory.stepCounter.readStepCount());
+                    } catch (InterruptedException e) {
+                        //In case of an error, the step counter is stopped and reset but not saved
+                        stepHistory.stepCounter.stopCounter();
+                        stepHistory.stepCounter.resetSteps();
+                    }
 
-                }
-                catch(InterruptedException e) {
-                    //In case of an error, the step counter is stopped and reset but not saved
+                    //Stop button pressed
                     stepHistory.stepCounter.stopCounter();
+
+                    //Saves button pressed, saves and resets
+                    stepHistory.addDailyCount(stepHistory.stepCounter.saveDailyCount());
                     stepHistory.stepCounter.resetSteps();
                 }
+            };
 
-                //Stop button pressed
-                stepHistory.stepCounter.stopCounter();
-
-                //Saves button pressed, saves and resets
-                stepHistory.addDailyCount(stepHistory.stepCounter.saveDailyCount());
-                stepHistory.stepCounter.resetSteps();
-            }
-        };
-
-        Thread testThread = new Thread(testingThread);
-        testThread.start();
+            Thread testThread = new Thread(testingThread);
+            testThread.start();
+        }
         */
 
 
@@ -60,7 +60,7 @@ public class Main {
         /*
         timer.startTimer(100); //1 minute 40 seconds for testing
 
-        */
+         */
 
     }
 }

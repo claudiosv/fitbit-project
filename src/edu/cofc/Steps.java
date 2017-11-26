@@ -22,28 +22,33 @@ public class Steps {
     /**
      * Begins taking readings from the Accelerometer Sensor
      */
-    public void startCounter() {
-        sensor.start();
+    public boolean startCounter() {
+        if(!sensor.isReading) {
+            sensor.start();
 
-        Runnable stepRunnable = new Runnable() {
-            public void run() {
-                try {
-                    while(sensor.isReading) {
-                        int speed = sensor.read();
-                        if (speed > walkingSpeed) {
-                            numSteps++;
+            Runnable stepRunnable = new Runnable() {
+                public void run() {
+                    try {
+                        while (sensor.isReading) {
+                            int speed = sensor.read();
+                            if (speed > walkingSpeed)
+                                numSteps++;
+
+                            Thread.sleep(500);
                         }
-                        Thread.sleep(500);
+                    }
+                    catch (InterruptedException e) {
+                        sensor.stop();
                     }
                 }
-                catch (InterruptedException e) {
-                    sensor.stop();
-                }
-            }
-        };
+            };
 
-        stepThread = new Thread(stepRunnable);
-        stepThread.start();
+            stepThread = new Thread(stepRunnable);
+            stepThread.start();
+            return true;
+        }
+
+        return false;
     }
 
     /**
