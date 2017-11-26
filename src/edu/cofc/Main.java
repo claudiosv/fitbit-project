@@ -30,9 +30,7 @@ public class Main {
                         System.out.printf("Step Count: %d\n", stepHistory.stepCounter.readStepCount());
 
                     } catch (InterruptedException e) {
-                        //In case of an error, the step counter is stopped and reset but not saved
-                        stepHistory.stepCounter.stopCounter();
-                        stepHistory.stepCounter.resetSteps();
+                        //thread interrupted display error
                     }
 
                     //Stop button pressed
@@ -81,9 +79,7 @@ public class Main {
                             Thread.sleep(500);
                         }
                     } catch (InterruptedException e) {
-                        //In case of an error, the step counter is stopped and reset but not saved
-                        heartHistory.heartMonitor.stopHeart();
-                        heartHistory.heartMonitor.resetHeart();
+                        //thread interrupted display error
                     }
 
                     //Stop button pressed
@@ -131,6 +127,41 @@ public class Main {
 
             Thread syncThread = new Thread(syncRunnable);
             syncThread.start();
+        }
+        */
+
+        /* Sleep Tracker */
+
+        /*
+        if(sleepHistory.sleepTracker.startSleepTracker()) {
+            Runnable testRun = new Runnable() {
+                public void run() {
+                    try {
+                        while (!sleepHistory.sleepTracker.isSleeping()) {
+                            System.out.println("waiting to fall asleep");
+                            Thread.sleep(500);
+                        }
+                        while(sleepHistory.sleepTracker.isSleeping()) {
+                            System.out.println("waiting to wake up");
+                            Thread.sleep(500);
+                        }
+
+                        System.out.printf("Saving sleep times\n");
+                        sleepHistory.addSleepTimes(sleepHistory.sleepTracker.saveNightsSleep());
+
+                        NightsSleep lastNight = sleepHistory.getSleepTimes(0);
+                        System.out.printf("Fell Asleep At: %s\n", lastNight.getSleepTime());
+                        System.out.printf("Woke Up At: %s\n", lastNight.getWakeTime());
+                        System.out.printf("Seconds Asleep: %d\n", lastNight.secondsAsleep());
+                    }
+                    catch (InterruptedException e) {
+                        //thread interrupted, display error
+                    }
+                }
+            };
+
+            Thread testThread = new Thread(testRun);
+            testThread.start();
         }
         */
     }

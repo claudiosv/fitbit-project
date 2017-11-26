@@ -9,8 +9,11 @@ public class SleepHistory {
     public ArrayList<NightsSleep> sleepTimes = new ArrayList<>();
     public SleepTracker sleepTracker = new SleepTracker();
 
-    public void addSleepTimes(NightsSleep sleep)
-    {
+    public void addSleepTimes(NightsSleep sleep) {
+        sleepTimes.add(sleep);
+    }
 
+    public NightsSleep getSleepTimes(int index) {
+        return sleepTimes.get(index);
     }
 }
