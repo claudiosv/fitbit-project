@@ -3,11 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="6091dcef-9972-4142-aa7f-488cb285228d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/cofc/Heart.java" afterPath="$PROJECT_DIR$/src/edu/cofc/Heart.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/cofc/HeartHistory.java" afterPath="$PROJECT_DIR$/src/edu/cofc/HeartHistory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/cofc/HeartMonitor.java" afterPath="$PROJECT_DIR$/src/edu/cofc/HeartMonitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/cofc/Accelerometer.java" afterPath="$PROJECT_DIR$/src/edu/cofc/Accelerometer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/cofc/Companion.java" afterPath="$PROJECT_DIR$/src/edu/cofc/Companion.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/cofc/HeartRate.java" afterPath="$PROJECT_DIR$/src/edu/cofc/HeartRate.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/cofc/Main.java" afterPath="$PROJECT_DIR$/src/edu/cofc/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/cofc/Sync.java" afterPath="$PROJECT_DIR$/src/edu/cofc/Sync.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,47 +19,52 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/cofc/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1425">
-              <caret line="95" column="14" lean-forward="true" selection-start-line="95" selection-start-column="14" selection-end-line="95" selection-end-column="14" />
+            <state relative-caret-position="120">
+              <caret line="8" column="27" lean-forward="false" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SleepHistory.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/cofc/SleepHistory.java">
+      <file leaf-file-name="Companion.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/cofc/Companion.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
+            <state relative-caret-position="645">
+              <caret line="43" column="35" lean-forward="false" selection-start-line="43" selection-start-column="35" selection-end-line="43" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HeartHistory.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/cofc/HeartHistory.java">
+      <file leaf-file-name="Sync.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/cofc/Sync.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+            <state relative-caret-position="630">
+              <caret line="42" column="20" lean-forward="true" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HeartMonitor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/cofc/HeartMonitor.java">
+      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/cofc/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="83" lean-forward="false" selection-start-line="23" selection-start-column="83" selection-end-line="23" selection-end-column="83" />
-              <folding>
-                <element signature="e#222#223#0" expanded="true" />
-                <element signature="e#254#255#0" expanded="true" />
-                <element signature="e#294#295#0" expanded="true" />
-                <element signature="e#327#328#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="0">
+              <caret line="0" column="17" lean-forward="true" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HeartRate.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/cofc/HeartRate.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -81,11 +86,34 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Accelerometer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/edu/cofc/Accelerometer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+              <folding>
+                <element signature="e#296#297#0" expanded="true" />
+                <element signature="e#329#330#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HeartMonitor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/cofc/HeartMonitor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="23" column="83" lean-forward="false" selection-start-line="23" selection-start-column="83" selection-end-line="23" selection-end-column="83" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Steps.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/cofc/Steps.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="14" column="49" lean-forward="false" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
+            <state relative-caret-position="345">
+              <caret line="23" column="7" lean-forward="true" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
               <folding>
                 <element signature="e#1878#1879#0" expanded="true" />
                 <element signature="e#1925#1926#0" expanded="true" />
@@ -124,17 +152,19 @@
         <option value="$APPLICATION_CONFIG_DIR$/idea.properties" />
         <option value="$PROJECT_DIR$/src/edu/cofc/Sensors.java" />
         <option value="$PROJECT_DIR$/src/edu/cofc/DailySteps.java" />
-        <option value="$PROJECT_DIR$/src/edu/cofc/Accelerometer.java" />
         <option value="$PROJECT_DIR$/src/edu/cofc/Timer.java" />
         <option value="$PROJECT_DIR$/src/edu/cofc/StepHistory.java" />
         <option value="$PROJECT_DIR$/src/edu/cofc/SleepHistory.java" />
         <option value="$PROJECT_DIR$/src/edu/cofc/User.java" />
         <option value="$PROJECT_DIR$/src/edu/cofc/Steps.java" />
-        <option value="$PROJECT_DIR$/src/edu/cofc/HeartRate.java" />
         <option value="$PROJECT_DIR$/src/edu/cofc/HeartHistory.java" />
         <option value="$PROJECT_DIR$/src/edu/cofc/HeartMonitor.java" />
         <option value="$PROJECT_DIR$/src/edu/cofc/Heart.java" />
         <option value="$PROJECT_DIR$/src/edu/cofc/Main.java" />
+        <option value="$PROJECT_DIR$/src/edu/cofc/Companion.java" />
+        <option value="$PROJECT_DIR$/src/edu/cofc/Sync.java" />
+        <option value="$PROJECT_DIR$/src/edu/cofc/HeartRate.java" />
+        <option value="$PROJECT_DIR$/src/edu/cofc/Accelerometer.java" />
       </list>
     </option>
   </component>
@@ -337,7 +367,7 @@
       <workItem from="1511633473951" duration="1529000" />
       <workItem from="1511651615587" duration="6310000" />
       <workItem from="1511658143987" duration="537000" />
-      <workItem from="1511724404616" duration="1850000" />
+      <workItem from="1511724404616" duration="4041000" />
     </task>
     <task id="LOCAL-00001" summary="Implemented the Timer and the Step classes. Lightly tested with printf no asserts">
       <created>1511634809165</created>
@@ -381,11 +411,18 @@
       <option name="project" value="LOCAL" />
       <updated>1511658475714</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Heart Monitor implemented. Ready for UI">
+      <created>1511726273607</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1511726273607</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11656000" />
+    <option name="totallyTimeSpent" value="13847000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="-70" width="1920" height="1057" extended-state="6" />
@@ -399,7 +436,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928678" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32690355" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32690355" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928678" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -471,7 +508,8 @@
     <MESSAGE value="Minor changes to Steps and added methods to User class" />
     <MESSAGE value="Pushing changes" />
     <MESSAGE value="Small changes to Steps to be ready for UI to use it directly and added methods to User class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Small changes to Steps to be ready for UI to use it directly and added methods to User class" />
+    <MESSAGE value="Heart Monitor implemented. Ready for UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Heart Monitor implemented. Ready for UI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -576,10 +614,10 @@
         <state relative-caret-position="75">
           <caret line="5" column="26" lean-forward="false" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
           <folding>
-            <element signature="e#226#227#0" expanded="false" />
-            <element signature="e#258#259#0" expanded="false" />
-            <element signature="e#300#301#0" expanded="false" />
-            <element signature="e#333#334#0" expanded="false" />
+            <element signature="e#224#225#0" expanded="false" />
+            <element signature="e#256#257#0" expanded="false" />
+            <element signature="e#296#297#0" expanded="true" />
+            <element signature="e#329#330#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -658,13 +696,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/cofc/Sync.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/cofc/SleepTracker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -677,14 +708,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/cofc/Companion.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -717,31 +740,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/cofc/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="3" lean-forward="true" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
-          <folding>
-            <element signature="e#469#470#0" expanded="false" />
-            <element signature="e#509#510#0" expanded="false" />
-            <element signature="e#678#679#0" expanded="false" />
-            <element signature="e#714#715#0" expanded="false" />
-            <element signature="e#749#750#0" expanded="false" />
-            <element signature="e#785#786#0" expanded="false" />
-            <element signature="e#818#819#0" expanded="false" />
-            <element signature="e#854#855#0" expanded="false" />
-            <element signature="e#884#885#0" expanded="false" />
-            <element signature="e#918#919#0" expanded="false" />
-            <element signature="e#948#949#0" expanded="false" />
-            <element signature="e#982#983#0" expanded="false" />
-            <element signature="e#1015#1016#0" expanded="false" />
-            <element signature="e#1049#1050#0" expanded="false" />
-            <element signature="e#1084#1085#0" expanded="false" />
-            <element signature="e#1112#1113#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/cofc/Timer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -758,44 +756,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/cofc/Accelerometer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/cofc/HeartRate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="e#294#295#0" expanded="true" />
-            <element signature="e#320#321#0" expanded="true" />
-            <element signature="e#353#354#0" expanded="true" />
-            <element signature="e#384#385#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/cofc/HeartMonitor.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/cofc/Steps.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
-          <caret line="23" column="83" lean-forward="false" selection-start-line="23" selection-start-column="83" selection-end-line="23" selection-end-column="83" />
+          <caret line="23" column="7" lean-forward="true" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
           <folding>
-            <element signature="e#222#223#0" expanded="true" />
-            <element signature="e#254#255#0" expanded="true" />
-            <element signature="e#294#295#0" expanded="true" />
-            <element signature="e#327#328#0" expanded="true" />
+            <element signature="e#1878#1879#0" expanded="true" />
+            <element signature="e#1925#1926#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/cofc/SleepHistory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
+        <state relative-caret-position="0">
+          <caret line="0" column="17" lean-forward="true" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -808,14 +783,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/cofc/Steps.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/cofc/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="14" column="49" lean-forward="false" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
-          <folding>
-            <element signature="e#1878#1879#0" expanded="true" />
-            <element signature="e#1925#1926#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="17" lean-forward="true" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/cofc/HeartMonitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="23" column="83" lean-forward="false" selection-start-line="23" selection-start-column="83" selection-end-line="23" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/cofc/HeartRate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/cofc/Sync.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="42" column="20" lean-forward="true" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/cofc/Companion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="43" column="35" lean-forward="false" selection-start-line="43" selection-start-column="35" selection-end-line="43" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/cofc/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="27" lean-forward="false" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -834,11 +846,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/cofc/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/cofc/Accelerometer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1425">
-          <caret line="95" column="14" lean-forward="true" selection-start-line="95" selection-start-column="14" selection-end-line="95" selection-end-column="14" />
-          <folding />
+        <state relative-caret-position="240">
+          <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+          <folding>
+            <element signature="e#296#297#0" expanded="true" />
+            <element signature="e#329#330#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

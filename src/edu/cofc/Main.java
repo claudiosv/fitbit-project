@@ -6,7 +6,7 @@ public class Main {
     public static StepHistory stepHistory = new StepHistory();
     public static SleepHistory sleepHistory = new SleepHistory();
     public static HeartHistory heartHistory = new HeartHistory();
-    public static Sync sync = new Sync();
+    public static Sync sync = new Sync(user);
     public static Timer timer = new Timer();
 
     public static void main(String[] args) {
@@ -97,6 +97,40 @@ public class Main {
 
             Thread testThread = new Thread(testingThread);
             testThread.start();
+        }
+        */
+
+        /* Sync, Companion and User
+            - Sync should be called at the opening of the app
+            - This will set up the user (just fills in values)
+            - The sync process takes 2.5 seconds (just uses a sleep so this can change) so UI can show a 2.5 progress bar for the sync process?
+         */
+
+        /*
+        if(sync.addCompanion()) {
+            Runnable syncRunnable = new Runnable() {
+                public void run() {
+                    try {
+                        System.out.println("Starting the sync process");
+                        sync.syncData("Empty Data to send");
+
+                        Thread.sleep(2550);
+                        System.out.println("Sync process completed");
+
+                        System.out.println("user: " + user);
+                        System.out.printf("Username: %s\n", user.username);
+                        System.out.printf("Gender: %s\n", user.getGender());
+                        System.out.printf("Birthday: %s\n", user.getBirthday());
+                        System.out.printf("Height: %d\n", user.getHeight());
+                        System.out.printf("Weight: %d\n", user.getWeight());
+                    } catch (InterruptedException e) {
+                        //thread interrupted, display sync error
+                    }
+                }
+            };
+
+            Thread syncThread = new Thread(syncRunnable);
+            syncThread.start();
         }
         */
     }

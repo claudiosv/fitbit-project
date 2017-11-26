@@ -8,17 +8,17 @@ import java.util.Random;
 public class Accelerometer implements Sensors<Integer> {
     public boolean isReading = false;
 
-    //@Override
+    @Override
     public void start() {
         isReading = true;
     }
 
-    //@Override
+    @Override
     public void stop() {
         isReading = false;
     }
 
-    //@Override
+    @Override
     public Integer read() {
         Random accel = new Random();
         int reading = accel.nextInt(2000);
