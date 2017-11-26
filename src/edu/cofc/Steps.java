@@ -4,17 +4,58 @@ package edu.cofc;
  * Created by Claudio on 20/11/2017.
  */
 public class Steps {
+    private static final int walkingSpeed = 500;
+
+    private Thread stepThread;
+    private Accelerometer sensor;
     private int numSteps;
 
     /**
      * Initialize numSteps to zero
+     * Creates and starts our Accelerometer step reader
      */
     public Steps() {
         numSteps = 0;
+        sensor = new Accelerometer();
+    }
+
+    /**
+     * Begins taking readings from the Accelerometer Sensor
+     */
+    public void startCounter() {
+        sensor.start();
+
+        Runnable stepRunnable = new Runnable() {
+            public void run() {
+                try {
+                    while(sensor.isReading) {
+                        int speed = sensor.read();
+                        if (speed > walkingSpeed) {
+                            numSteps++;
+                        }
+                        Thread.sleep(500);
+                    }
+                }
+                catch (InterruptedException e) {
+                    sensor.stop();
+                }
+            }
+        };
+
+        stepThread = new Thread(stepRunnable);
+        stepThread.start();
+    }
+
+    /**
+     * Stops the Accelerometer Sensor from taking more readings
+     */
+    public void stopCounter() {
+        sensor.stop();
     }
 
     /**
      * Reset the step count to 0
+     * Stops the sensor from reading steps
      */
     public void resetSteps() {
         numSteps = 0;
@@ -24,15 +65,8 @@ public class Steps {
      * Returns the number of steps taken
      * @return
      */
-    public int getSteps() {
+    public int readStepCount() {
         return numSteps;
-    }
-
-    /**
-     * Increments the step count by one
-     */
-    public void takeStep() {
-        numSteps++;
     }
 
     /**

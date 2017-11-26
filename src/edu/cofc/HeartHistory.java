@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class HeartHistory {
     public ArrayList<HeartRate> heartRates = new ArrayList<>();
+    public HeartMonitor heartMonitor = new HeartMonitor();
 
     public void addHeartRate(HeartRate heartRate)
     {

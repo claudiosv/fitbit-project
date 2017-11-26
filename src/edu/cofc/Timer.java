@@ -30,17 +30,17 @@ public class Timer {
             public void run() {
                 try {
                     while (remainingTime > 0 && timerCounting) {
-                        System.out.printf("Timer Thread running: %d\n", remainingTime);
                         remainingTime--;
                         Thread.sleep(1000);
                     }
                 }
                 catch(InterruptedException e) {
-                    System.out.println("Timer Exception Caught: " + e.getMessage());
+                    remainingTime = 0;
+                    timerCounting = false;
                 }
 
                 //Somehow needs to signal to UI when this is completed. Create a 'signalAlarm' method?
-                System.out.println("Thread completed");
+                System.out.println("Timer completed");
             }
         };
 

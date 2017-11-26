@@ -31,6 +31,6 @@ public class DailySteps {
      * @return
      */
     public Date stepDate() {
-        return  saveTime;
+        return saveTime;
     }
 }

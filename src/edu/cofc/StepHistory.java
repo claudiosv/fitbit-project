@@ -7,6 +7,9 @@ import java.util.ArrayList;
  */
 public class StepHistory {
     private ArrayList<DailySteps> stepCounts = new ArrayList<DailySteps>();
+    public Steps stepCounter = new Steps();
+
+    public StepHistory() { }
 
     /**
      * Adds a DailySteps object to history list

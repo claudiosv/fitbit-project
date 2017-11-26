@@ -3,7 +3,7 @@ package edu.cofc;
 /**
  * Created by Claudio on 20/11/2017.
  */
-public class HeartMonitor implements Sensors {
+public class HeartMonitor implements Sensors<Integer> {
     public int beatCount;
     public int secondsPassed;
 
@@ -18,8 +18,8 @@ public class HeartMonitor implements Sensors {
     }
 
     @Override
-    public void read() {
-
+    public Integer read() {
+        return 0;
     }
 
     public int getBPM()

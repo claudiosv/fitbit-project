@@ -7,6 +7,8 @@ import java.util.ArrayList;
  */
 public class SleepHistory {
     public ArrayList<NightsSleep> sleepTimes = new ArrayList<>();
+    public SleepTracker sleepTracker = new SleepTracker();
+
     public void addSleepTimes(NightsSleep sleep)
     {
 

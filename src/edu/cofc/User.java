@@ -6,6 +6,7 @@ import java.util.Date;
  * Created by Claudio on 20/11/2017.
  */
 public class User {
+    //User Attributes
     public String username;
     private String password;
     private Date birthday;
@@ -13,7 +14,7 @@ public class User {
     private int weight;
     private String gender;
 
-    public boolean beingSetup()
-    {return false;}
-
+    public boolean beingSetup() {
+        return false;
+    }
 }
