@@ -48,25 +48,29 @@ public class SleepTracker {
                         //small delay to allow UI thread to be ready
                         Thread.sleep(1000);
 
-                        while(!checkIfSleeping()) {
+                        while(!checkIfSleeping() && sensor.isReading) {
                             //check if sleep every 30 seconds
                             Thread.sleep(1000);
                         }
 
-                        sleepTime = new Date();
-                        sleeping = true;
+                        if(sensor.isReading) {
+                            sleepTime = new Date();
+                            sleeping = true;
+                        }
 
                         //Ten second delay to compensate for not having a real way to detect sleep
                         //Just to give some data for proof of concept
                         Thread.sleep(10000);
 
-                        while(checkIfSleeping()) {
+                        while(checkIfSleeping() && sensor.isReading) {
                             //check to see if we are still asleep
                             Thread.sleep(1000);
                         }
 
-                        wakeTime = new Date();
-                        sleeping = false;
+                        if(sensor.isReading) {
+                            wakeTime = new Date();
+                            sleeping = false;
+                        }
                     }
                     catch (InterruptedException e) {
                         sensor.stop();
