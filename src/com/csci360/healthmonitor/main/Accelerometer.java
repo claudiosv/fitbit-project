@@ -1,4 +1,4 @@
-package edu.cofc;
+package com.csci360.healthmonitor.main;
 
 import java.util.Random;
 
