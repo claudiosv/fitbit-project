@@ -1,12 +1,23 @@
 package edu.cofc;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * Created by Claudio on 20/11/2017.
  */
 public class Timer {
     private boolean timerCounting;
-    private int remainingTime;
+    private SimpleIntegerProperty remainingTime;
     Thread timerThread;
+
+    public int getRemainingTime() {
+        return remainingTime.get();
+    }
+
+    public SimpleIntegerProperty remainingTimeProperty() {
+        return remainingTime;
+    }
 
     /**
      * Timer constructor
@@ -14,7 +25,7 @@ public class Timer {
      */
     public Timer() {
         timerCounting = false;
-        remainingTime = 0;
+        remainingTime = new SimpleIntegerProperty(0);
         timerThread = null;
     }
 
@@ -24,20 +35,22 @@ public class Timer {
      * @param seconds
      */
     public void startTimer(int seconds) {
-        remainingTime = seconds;
+        remainingTime.set(seconds);
 
         Runnable timerRunnable = new Runnable() {
             public void run() {
                 try {
-                    while (remainingTime > 0 && timerCounting) {
-                        remainingTime--;
+                    while (remainingTime.get() > 0 && timerCounting) {
+                        remainingTime.setValue(remainingTime.get() - 1);
+                        System.out.println("Subtracted 1");
                         Thread.sleep(1000);
                     }
                 }
                 catch(InterruptedException e) {
-                    remainingTime = 0;
+                    remainingTime.set(0);
                     timerCounting = false;
                 }
+
 
                 //Somehow needs to signal to UI when this is completed. Create a 'signalAlarm' method?
                 System.out.println("Timer completed");

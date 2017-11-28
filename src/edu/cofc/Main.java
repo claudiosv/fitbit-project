@@ -1,6 +1,8 @@
 package edu.cofc;
 
 import javafx.application.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.event.*;
 import javafx.geometry.HPos;
@@ -238,7 +240,7 @@ public class Main extends Application {
                         System.out.println("Sync process completed");
                         category.setText("Sync process completed");
 
-                        category.setText("User: " + user + "\nUsername: " + user.username + "\nGender: " + user.getGender() +
+                        category.setText("Username: " + user.username + "\nGender: " + user.getGender() +
                                 "\nBirthday: " + user.getBirthday() + "\nHeight: " + user.getHeight() + "\nWeight: " + user.getWeight());
 
 
@@ -270,20 +272,57 @@ public class Main extends Application {
         grid.setPadding(new Insets(0, 5, 0, 5));
 
         // Category in column 2, row 1
+
+
         Label category = new Label("140");
+        Slider slider = new Slider();
+        slider.setMin(0);
+        slider.setMax(300);
+        slider.setValue(100);
+        slider.setShowTickLabels(false);
+        slider.setShowTickMarks(false);
+        slider.setMajorTickUnit(50);
+        slider.setMinorTickCount(5);
+        slider.setBlockIncrement(10);
+        slider.setMaxWidth(100);
+        slider.setMinWidth(100);
+        slider.valueProperty().addListener((obs, oldval, newVal) ->
+                slider.setValue(newVal.intValue()));
+        slider.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+
+                category.setText(String.format("%.0f", new_val));
+            }
+        });
         category.setWrapText(true);
 
-        category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+        category.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         Button btn1 = new Button();
-        btn1.setText("T");
+        Image imageDecline = new Image(getClass().getResourceAsStream("002-play-button.png"));
+        ImageView imageView = new ImageView(imageDecline);
+        imageView.setFitHeight(16);
+        imageView.setFitWidth(32);
+        btn1.setGraphic(imageView);
         btn1.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                timer.startTimer(100);
+                timer.remainingTimeProperty().addListener((observable, oldValue, newValue) -> {
+                    if(newValue.intValue() <= 0)
+                    {
+                        //completed
+                    }
+                    else
+                    {
+                        Platform.runLater(() -> category.setText(String.format("%d", newValue.intValue())));
+                    }
+                });
+                timer.startTimer((int)slider.getValue());
             }
         });
-        grid.add(btn1, 0, 1);
+        grid.add(slider, 0, 1);
+        grid.add(btn1, 0, 2);
 
         grid.add(category, 0, 0, 3, 1);
 
@@ -292,6 +331,111 @@ public class Main extends Application {
     }
 
     public GridPane addStepCounter() {
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(16, 16, 16, 32));
+
+        // Category in column 2, row 1
+
+        Button btn1 = new Button();
+        Image imageDecline = new Image(getClass().getResourceAsStream("002-play-button.png"));
+        ImageView imageView = new ImageView(imageDecline);
+        imageView.setFitHeight(32);
+        imageView.setFitWidth(32);
+        btn1.setGraphic(imageView);
+
+        btn1.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(addActiveStepCounter());
+
+            }
+        });
+        GridPane.setHalignment(btn1, HPos.CENTER);
+        GridPane.setValignment(btn1, VPos.CENTER);
+        grid.add(btn1, 0, 1);
+
+
+        return grid;
+    }
+
+    public GridPane addActiveStepCounter() {
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(0, 5, 0, 5));
+
+        // Category in column 2, row 1
+        Label category = new Label();
+        category.setWrapText(true);
+
+        category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+
+        Button btnStop = new Button();
+        Image imageStop = new Image(getClass().getResourceAsStream("002-stop.png"));
+        ImageView imageViewStop = new ImageView(imageStop);
+        imageViewStop.setFitHeight(16);
+        imageViewStop.setFitWidth(16);
+        btnStop.setGraphic(imageViewStop);
+
+        btnStop.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stepHistory.stepCounter.stopCounter();
+                border.setCenter(addStoppedStepCounter());
+            }
+        });
+
+        Button btnReset = new Button();
+        Image imageReset = new Image(getClass().getResourceAsStream("001-reload.png"));
+        ImageView imageViewReset = new ImageView(imageReset);
+        imageViewReset.setFitHeight(16);
+        imageViewReset.setFitWidth(16);
+        btnReset.setGraphic(imageViewReset);
+
+        btnReset.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stepHistory.stepCounter.resetSteps();
+            }
+        });
+
+
+        grid.add(category, 0, 0, 3, 1);
+        grid.add(btnStop, 0, 2);
+        grid.add(btnReset, 1, 2);
+
+        if(stepHistory.stepCounter.startCounter()) {
+            Runnable testingThread = new Runnable() {
+                public void run() {
+                    try {
+                        //This will be a while(onStepCountScreen) {} using sleep for testing purposes
+                        //Update the text on screen
+                        Thread.sleep(2000);
+                        System.out.printf("Step Count: %d\n", stepHistory.stepCounter.readStepCount());
+                        category.setText("Step Count: " + stepHistory.stepCounter.readStepCount());
+
+
+                    } catch (InterruptedException e) {
+                        //thread interrupted display error
+                    }
+                }
+            };
+
+            Platform.runLater(testingThread);
+        }
+
+
+
+        return grid;
+    }
+
+    public GridPane addStoppedStepCounter() {
+        //just start button
         GridPane grid = new GridPane();
         grid.setHgap(5);
         grid.setVgap(5);
@@ -313,26 +457,6 @@ public class Main extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                if(stepHistory.stepCounter.startCounter()) {
-                    Runnable testingThread = new Runnable() {
-                        public void run() {
-                            try {
-                                //This will be a while(onStepCountScreen) {} using sleep for testing purposes
-                                //Update the text on screen
-                                Thread.sleep(2000);
-                                System.out.printf("Step Count: %d\n", stepHistory.stepCounter.readStepCount());
-                                category.setText("Step Count: " + stepHistory.stepCounter.readStepCount());
-
-
-                            } catch (InterruptedException e) {
-                                //thread interrupted display error
-                            }
-                        }
-                    };
-
-                    Thread testThread = new Thread(testingThread);
-                    testThread.start();
-                }
             }
         });
 
@@ -494,7 +618,7 @@ public class Main extends Application {
         });
         grid.add(btn5, 2, 3);
 
-        BackgroundFill myBF = new BackgroundFill(Color.PURPLE, new CornerRadii(1),
+        BackgroundFill myBF = new BackgroundFill(Color.BLACK, new CornerRadii(1),
                 new Insets(0.0,0.0,0.0,0.0));// or null for the padding
 //then you set to your node or container or layout
         grid.setBackground(new Background(myBF));
@@ -503,15 +627,7 @@ public class Main extends Application {
     }
         @Override
         public void start(Stage primaryStage) throws Exception {
-            Button btn = new Button();
-            btn.setText("Say 'Hello World'");
-            btn.setOnAction(new EventHandler<ActionEvent>() {
 
-                @Override
-                public void handle(ActionEvent event) {
-                    System.out.println("Hello World!");
-                }
-            });
 
             //StackPane root = new StackPane();
             //root.getChildren().add(addHomeScreen());
@@ -530,7 +646,14 @@ public class Main extends Application {
                             "-fx-max-width: 16px; " +
                             "-fx-max-height: 16px;"
             );
+            btnTest.setOnAction(new EventHandler<ActionEvent>() {
 
+                @Override
+                public void handle(ActionEvent event) {
+                    border.setCenter(addHomeScreen());
+                    btnTest.setVisible(false);
+                }
+            });
             Label category = new Label("10:00 AM");
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
@@ -555,7 +678,7 @@ public class Main extends Application {
 
 
             test = new Pane();
-            BackgroundFill myBF = new BackgroundFill(Color.GRAY, new CornerRadii(0),
+            BackgroundFill myBF = new BackgroundFill(Color.BLACK, new CornerRadii(0),
                     new Insets(0.0,0.0,0.0,0.0));// or null for the padding
 //then you set to your node or container or layout
             test.setBackground(new Background(myBF));

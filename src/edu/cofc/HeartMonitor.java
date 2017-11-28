@@ -10,7 +10,7 @@ public class HeartMonitor implements Sensors<Double> {
     private Random rand;
 
     public HeartMonitor() {
-        this.rand = rand;
+        this.rand = new Random();
     }
 
     @Override
