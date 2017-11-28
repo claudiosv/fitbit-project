@@ -1,6 +1,27 @@
 package edu.cofc;
 
-public class Main {
+import javafx.application.*;
+import javafx.concurrent.Task;
+import javafx.event.*;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+public class Main extends Application {
     //UI Needs to have access to our Classes
     public static User user = new User();
     public static StepHistory stepHistory = new StepHistory();
@@ -8,9 +29,578 @@ public class Main {
     public static HeartHistory heartHistory = new HeartHistory();
     public static Sync sync = new Sync(user);
     public static Timer timer = new Timer();
+    public Scene scene;
+    public Pane test;
+    public Button btnTest;
+    BorderPane border;
 
-    public static void main(String[] args) {
+    public GridPane addSleepTracker() {
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(0, 5, 0, 5));
 
+        // Category in column 2, row 1
+        Label category = new Label();
+        category.setWrapText(true);
+
+        category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+
+        grid.add(category, 0, 0, 3, 1);
+        if(sleepHistory.sleepTracker.startSleepTracker()) {
+            Runnable testRun = new Runnable() {
+                public void run() {
+                    try {
+                        while (!sleepHistory.sleepTracker.isSleeping()) {
+                            System.out.println("waiting to fall asleep");
+                            category.setText("Waiting to fall asleep");
+                            Thread.sleep(500);
+                        }
+                        while(sleepHistory.sleepTracker.isSleeping()) {
+                            System.out.println("waiting to wake up");
+                            category.setText("Waiting to wake up");
+                            Thread.sleep(500);
+                        }
+
+                        category.setText("Saving sleep times");
+                        sleepHistory.addSleepTimes(sleepHistory.sleepTracker.saveNightsSleep());
+
+                        NightsSleep lastNight = sleepHistory.getSleepTimes(0);
+                        System.out.printf("Fell Asleep At: %s\n", lastNight.getSleepTime());
+                        System.out.printf("Woke Up At: %s\n", lastNight.getWakeTime());
+                        System.out.printf("Seconds Asleep: %d\n", lastNight.secondsAsleep());
+
+                        category.setText("Fell Asleep At: " + lastNight.getSleepTime() + "\nWoke Up At: " + lastNight.getWakeTime() + "\nSeconds Asleep: " + lastNight.secondsAsleep());
+                    }
+                    catch (InterruptedException e) {
+                        //thread interrupted, display error
+                    }
+                }
+            };
+
+            Thread testThread = new Thread(testRun);
+            testThread.start();
+        }
+
+        return grid;
+    }
+
+    public Pane addHeartMonitor() {
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(16, 16, 16, 16));
+
+        // Category in column 2, row 1
+
+        Button btn1 = new Button();
+        Image imageDecline = new Image(getClass().getResourceAsStream("003-heartbeat.png"));
+        ImageView imageView = new ImageView(imageDecline);
+        imageView.setFitHeight(32);
+        imageView.setFitWidth(32);
+        btn1.setGraphic(imageView);
+
+        btn1.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(addActiveHeartMonitor());
+
+            }
+        });
+
+        grid.add(btn1, 0, 1);
+
+
+        return grid;
+    }
+
+    public GridPane addActiveHeartMonitor() {
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(0, 5, 0, 5));
+
+        // Category in column 2, row 1
+        Label category = new Label();
+        category.setWrapText(true);
+
+        category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+
+        Button btnStop = new Button();
+        Image imageStop = new Image(getClass().getResourceAsStream("002-stop.png"));
+        ImageView imageViewStop = new ImageView(imageStop);
+        imageViewStop.setFitHeight(16);
+        imageViewStop.setFitWidth(16);
+        btnStop.setGraphic(imageViewStop);
+
+        btnStop.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                heartHistory.heartMonitor.stopHeart();
+                border.setCenter(addStoppedHeartMonitor());
+            }
+        });
+
+        Button btnReset = new Button();
+        Image imageReset = new Image(getClass().getResourceAsStream("001-reload.png"));
+        ImageView imageViewReset = new ImageView(imageReset);
+        imageViewReset.setFitHeight(16);
+        imageViewReset.setFitWidth(16);
+        btnReset.setGraphic(imageViewReset);
+
+        btnReset.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                heartHistory.heartMonitor.resetHeart();
+            }
+        });
+
+
+        grid.add(category, 0, 0, 3, 1);
+        grid.add(btnStop, 0, 2);
+        grid.add(btnReset, 1, 2);
+
+        if(heartHistory.heartMonitor.startHeart()) {
+            Runnable testingThread = new Runnable() {
+                public void run() {
+                    try {
+                        for (int i = 0; i < 40; i++) {
+                            //Read for twenty seconds
+                            System.out.printf("Heart Rate (BPM): %f\n", heartHistory.heartMonitor.readHeartRate());
+                            category.setText("Heart Rate (BPM): " + heartHistory.heartMonitor.readHeartRate());
+                            Thread.sleep(0);//500);
+                        }
+                    } catch (InterruptedException e) {
+                        //thread interrupted display error
+                    }
+                }
+            };
+
+            //Thread testThread = new Thread(testingThread);
+            //testThread.start();
+            Platform.runLater(testingThread);
+        }
+        return grid;
+    }
+
+    public GridPane addStoppedHeartMonitor()
+    {
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(0, 5, 0, 5));
+
+        // Category in column 2, row 1
+        Button btnSave = new Button();
+        Image imageSave = new Image(getClass().getResourceAsStream("003-save.png"));
+        ImageView imageViewSave = new ImageView(imageSave);
+        imageViewSave.setFitHeight(16);
+        imageViewSave.setFitWidth(16);
+        btnSave.setGraphic(imageViewSave);
+
+        btnSave.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                heartHistory.addHeartRate(heartHistory.heartMonitor.saveHeartRate());
+                heartHistory.heartMonitor.resetHeart();
+            }
+        });
+        grid.add(btnSave, 2, 2);
+        return grid;
+
+}
+
+    public GridPane addSyncData() {
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(0, 5, 0, 5));
+
+        // Category in column 2, row 1
+        Label category = new Label();
+        category.setWrapText(true);
+
+        category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+        if(sync.addCompanion()) {
+            Runnable syncRunnable = new Runnable() {
+                public void run() {
+                    try {
+                        System.out.println("Starting the sync process");
+                        category.setText("Starting the sync process");
+                        sync.syncData("Empty Data to send");
+
+                        Thread.sleep(2550);
+                        System.out.println("Sync process completed");
+                        category.setText("Sync process completed");
+
+                        category.setText("User: " + user + "\nUsername: " + user.username + "\nGender: " + user.getGender() +
+                                "\nBirthday: " + user.getBirthday() + "\nHeight: " + user.getHeight() + "\nWeight: " + user.getWeight());
+
+
+                        System.out.println("User: " + user);
+                        System.out.printf("Username: %s\n", user.username);
+                        System.out.printf("Gender: %s\n", user.getGender());
+                        System.out.printf("Birthday: %s\n", user.getBirthday());
+                        System.out.printf("Height: %d\n", user.getHeight());
+                        System.out.printf("Weight: %d\n", user.getWeight());
+                    } catch (InterruptedException e) {
+                        //thread interrupted, display sync error
+                    }
+                }
+            };
+
+            Thread syncThread = new Thread(syncRunnable);
+            syncThread.start();
+        }
+        grid.add(category, 0, 0, 3, 1);
+
+
+        return grid;
+    }
+
+    public GridPane addTimer() {
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(0, 5, 0, 5));
+
+        // Category in column 2, row 1
+        Label category = new Label("140");
+        category.setWrapText(true);
+
+        category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+        Button btn1 = new Button();
+        btn1.setText("T");
+        btn1.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                timer.startTimer(100);
+            }
+        });
+        grid.add(btn1, 0, 1);
+
+        grid.add(category, 0, 0, 3, 1);
+
+
+        return grid;
+    }
+
+    public GridPane addStepCounter() {
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(0, 5, 0, 5));
+
+        // Category in column 2, row 1
+        Label category = new Label();
+        category.setWrapText(true);
+
+        category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+        Button btn1 = new Button();
+        Image imageDecline = new Image(getClass().getResourceAsStream("003-heartbeat.png"));
+        ImageView imageView = new ImageView(imageDecline);
+        imageView.setFitHeight(32);
+        imageView.setFitWidth(32);
+        btn1.setGraphic(imageView);
+
+        btn1.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if(stepHistory.stepCounter.startCounter()) {
+                    Runnable testingThread = new Runnable() {
+                        public void run() {
+                            try {
+                                //This will be a while(onStepCountScreen) {} using sleep for testing purposes
+                                //Update the text on screen
+                                Thread.sleep(2000);
+                                System.out.printf("Step Count: %d\n", stepHistory.stepCounter.readStepCount());
+                                category.setText("Step Count: " + stepHistory.stepCounter.readStepCount());
+
+
+                            } catch (InterruptedException e) {
+                                //thread interrupted display error
+                            }
+                        }
+                    };
+
+                    Thread testThread = new Thread(testingThread);
+                    testThread.start();
+                }
+            }
+        });
+
+        Button btn2 = new Button();
+        Image imageStop = new Image(getClass().getResourceAsStream("002-stop.png"));
+        ImageView imageViewStop = new ImageView(imageStop);
+        imageViewStop.setFitHeight(32);
+        imageViewStop.setFitWidth(32);
+        btn2.setGraphic(imageViewStop);
+
+        btn2.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stepHistory.stepCounter.stopCounter();
+            }
+        });
+
+        Button btnReset = new Button();
+        Image imageReset = new Image(getClass().getResourceAsStream("001-reload.png"));
+        ImageView imageViewReset = new ImageView(imageReset);
+        imageViewReset.setFitHeight(32);
+        imageViewReset.setFitWidth(32);
+        btnReset.setGraphic(imageViewReset);
+
+        btnReset.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stepHistory.stepCounter.resetSteps();
+            }
+        });
+        Button btnSave = new Button();
+        Image imageSave = new Image(getClass().getResourceAsStream("003-heartbeat.png"));
+        ImageView imageViewSave = new ImageView(imageSave);
+        imageViewSave.setFitHeight(32);
+        imageViewSave.setFitWidth(32);
+        btnSave.setGraphic(imageViewSave);
+
+        btnSave.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stepHistory.addDailyCount(stepHistory.stepCounter.saveDailyCount());
+
+            }
+        });
+
+        grid.add(category, 0, 0, 3, 1);
+        grid.add(btn1, 0, 1);
+        grid.add(btn2, 0, 2);
+        grid.add(btnReset, 1, 2);
+        grid.add(btnSave, 2, 2);
+        return grid;
+    }
+
+    public GridPane addHomeScreen() {
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(0, 5, 0, 5));
+
+        // Category in column 2, row 1
+        Label category = new Label("10:00 AM");
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+        category.setText(sdf.format(cal.getTime()));
+        GridPane.setHalignment(category, HPos.CENTER);
+
+        category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+        category.setTextFill(Color.WHITE);
+
+        //grid.add(category, 0, 0, 3, 1);
+
+        Button btn1 = new Button();
+        //btn1.setStyle("-fx-background-color: #e5e5e5;");
+       // btn1.setText("T");
+        Image imageTimer = new Image(getClass().getResourceAsStream("007-stopwatch.png"));
+        ImageView imageViewTimer = new ImageView(imageTimer);
+        imageViewTimer.setFitHeight(16);
+        imageViewTimer.setFitWidth(16);
+        btn1.setGraphic(imageViewTimer);
+        btn1.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+
+                border.setCenter(addTimer());
+                btnTest.setVisible(true);
+            }
+        });
+        grid.add(btn1, 0, 1);
+
+        Button btn2 = new Button();
+        Image imageHeartMonitor = new Image(getClass().getResourceAsStream("003-heartbeat.png"));
+        ImageView imageViewHeartMonitor = new ImageView(imageHeartMonitor);
+        imageViewHeartMonitor.setFitHeight(16);
+        imageViewHeartMonitor.setFitWidth(16);
+        btn2.setGraphic(imageViewHeartMonitor);
+        //btn2.setText("H");
+        btn2.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(addHeartMonitor());
+                btnTest.setVisible(true);
+            }
+        });
+        grid.add(btn2, 2, 1);
+
+        Button btn3 = new Button();
+        //btn3.setText("ST");
+        Image imageStepTracker = new Image(getClass().getResourceAsStream("004-stais.png"));
+        ImageView imageViewStepTracker = new ImageView(imageStepTracker);
+        imageViewStepTracker.setFitHeight(16);
+        imageViewStepTracker.setFitWidth(16);
+        btn3.setGraphic(imageViewStepTracker);
+        btn3.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(addStepCounter());
+                btnTest.setVisible(true);
+            }
+        });
+        grid.add(btn3, 1, 2);
+
+        Button btn4 = new Button();
+        //btn4.setText("Z");
+        Image imageSleepTracker = new Image(getClass().getResourceAsStream("001-sleep.png"));
+        ImageView imageViewSleepTracker = new ImageView(imageSleepTracker);
+        imageViewSleepTracker.setFitHeight(16);
+        imageViewSleepTracker.setFitWidth(16);
+        btn4.setGraphic(imageViewSleepTracker);
+        btn4.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(addSleepTracker());
+                btnTest.setVisible(true);
+            }
+        });
+        grid.add(btn4, 0, 3);
+
+        Button btn5 = new Button();
+        //btn5.setText("SY");
+        Image imageSync = new Image(getClass().getResourceAsStream("002-synchronization-arrows.png"));
+        ImageView imageViewSync = new ImageView(imageSync);
+        imageViewSync.setFitHeight(16);
+        imageViewSync.setFitWidth(16);
+        btn5.setGraphic(imageViewSync);
+        btn5.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(addSyncData());
+                btnTest.setVisible(true);
+            }
+        });
+        grid.add(btn5, 2, 3);
+
+        BackgroundFill myBF = new BackgroundFill(Color.BLACK, new CornerRadii(1),
+                new Insets(0.0,0.0,0.0,0.0));// or null for the padding
+//then you set to your node or container or layout
+        grid.setBackground(new Background(myBF));
+
+        // Title in column 3, row 1
+        /*Text chartTitle = new Text("Current Year");
+        chartTitle.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        grid.add(chartTitle, 2, 0);
+
+        // Subtitle in columns 2-3, row 2
+        Text chartSubtitle = new Text("Goods and Services");
+        grid.add(chartSubtitle, 1, 1, 2, 1);
+
+        // House icon in column 1, rows 1-2
+        //ImageView imageHouse = new ImageView(
+        //        new Image(LayoutSample.class.getResourceAsStream("graphics/house.png")));
+        //grid.add(imageHouse, 0, 0, 1, 2);
+
+        // Left label in column 1 (bottom), row 3
+        Text goodsPercent = new Text("Goods\n80%");
+        GridPane.setValignment(goodsPercent, VPos.BOTTOM);
+        grid.add(goodsPercent, 0, 2);
+
+
+        // Right label in column 4 (top), row 3
+        Text servicesPercent = new Text("Services\n20%");
+        GridPane.setValignment(servicesPercent, VPos.TOP);
+        grid.add(servicesPercent, 3, 2);*/
+
+        return grid;
+    }
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            Button btn = new Button();
+            btn.setText("Say 'Hello World'");
+            btn.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    System.out.println("Hello World!");
+                }
+            });
+
+            StackPane root = new StackPane();
+            root.getChildren().add(addHomeScreen());
+            border = new BorderPane();
+            HBox hbox = new HBox();
+            btnTest = new Button();
+            btnTest.setVisible(false);
+            Image imageBack = new Image(getClass().getResourceAsStream("001-back.png"));
+            ImageView imageViewBack = new ImageView(imageBack);
+            imageViewBack.setFitHeight(12);
+            imageViewBack.setFitWidth(12);
+            btnTest.setGraphic(imageViewBack);
+            btnTest.setStyle(
+                            "-fx-min-width: 16px; " +
+                            "-fx-min-height: 16px; " +
+                            "-fx-max-width: 16px; " +
+                            "-fx-max-height: 16px;"
+            );
+
+            Label category = new Label("10:00 AM");
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+            category.setText(sdf.format(cal.getTime()));
+            //category.setAlignment(Pos.TOP_RIGHT);
+            //btnTest.setAlignment(Pos.TOP_LEFT);
+            hbox.setPadding(new Insets(2,2,2,2));
+            Region reg = new Region();
+            reg.setPrefWidth(20);
+            hbox.getChildren().add(btnTest);
+            hbox.getChildren().add(reg);
+            hbox.getChildren().add(category);
+
+            border.setTop(hbox);
+            border.setCenter(addHomeScreen());
+
+            Pane mainBox = new Pane();
+            Image watch = new Image(getClass().getResourceAsStream("watch.jpg"));
+            BackgroundImage backgroundImage = new BackgroundImage(watch, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            mainBox.setBackground(new Background(backgroundImage));
+
+
+
+            test = new Pane();
+            BackgroundFill myBF = new BackgroundFill(Color.BLACK, new CornerRadii(1),
+                    new Insets(0.0,0.0,0.0,0.0));// or null for the padding
+//then you set to your node or container or layout
+            test.setBackground(new Background(myBF));
+            test.setMaxSize(113, 113);
+            test.setMinSize(113, 113);
+
+            test.setLayoutX(15);
+            test.setLayoutY(85);
+
+            test.getChildren().add(border);
+            mainBox.getChildren().add(test);
+            scene = new Scene(mainBox, 150, 286);
+            scene.getStylesheets().add
+                    (getClass().getResource("button.css").toExternalForm());
+            primaryStage.setTitle("Hello World!");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        }
+
+    public static void main(String args[]){
+        launch(args);
 
          /* How the step counter works: (This will be activated by switching to step counter screen and pressing start)
             - Starts the step counter (constantly reading from the accelerometer)

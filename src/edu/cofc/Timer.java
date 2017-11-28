@@ -41,12 +41,14 @@ public class Timer {
 
                 //Somehow needs to signal to UI when this is completed. Create a 'signalAlarm' method?
                 System.out.println("Timer completed");
+
             }
         };
 
         timerCounting = true;
         timerThread = new Thread(timerRunnable);
         timerThread.start();
+
     }
 
     /**
