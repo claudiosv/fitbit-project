@@ -89,7 +89,7 @@ public class Main extends Application {
         GridPane grid = new GridPane();
         grid.setHgap(5);
         grid.setVgap(5);
-        grid.setPadding(new Insets(16, 16, 16, 16));
+        grid.setPadding(new Insets(16, 16, 16, 32));
 
         // Category in column 2, row 1
 
@@ -108,7 +108,8 @@ public class Main extends Application {
 
             }
         });
-
+        GridPane.setHalignment(btn1, HPos.CENTER);
+        GridPane.setValignment(btn1, VPos.CENTER);
         grid.add(btn1, 0, 1);
 
 
@@ -493,35 +494,10 @@ public class Main extends Application {
         });
         grid.add(btn5, 2, 3);
 
-        BackgroundFill myBF = new BackgroundFill(Color.BLACK, new CornerRadii(1),
+        BackgroundFill myBF = new BackgroundFill(Color.PURPLE, new CornerRadii(1),
                 new Insets(0.0,0.0,0.0,0.0));// or null for the padding
 //then you set to your node or container or layout
         grid.setBackground(new Background(myBF));
-
-        // Title in column 3, row 1
-        /*Text chartTitle = new Text("Current Year");
-        chartTitle.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        grid.add(chartTitle, 2, 0);
-
-        // Subtitle in columns 2-3, row 2
-        Text chartSubtitle = new Text("Goods and Services");
-        grid.add(chartSubtitle, 1, 1, 2, 1);
-
-        // House icon in column 1, rows 1-2
-        //ImageView imageHouse = new ImageView(
-        //        new Image(LayoutSample.class.getResourceAsStream("graphics/house.png")));
-        //grid.add(imageHouse, 0, 0, 1, 2);
-
-        // Left label in column 1 (bottom), row 3
-        Text goodsPercent = new Text("Goods\n80%");
-        GridPane.setValignment(goodsPercent, VPos.BOTTOM);
-        grid.add(goodsPercent, 0, 2);
-
-
-        // Right label in column 4 (top), row 3
-        Text servicesPercent = new Text("Services\n20%");
-        GridPane.setValignment(servicesPercent, VPos.TOP);
-        grid.add(servicesPercent, 3, 2);*/
 
         return grid;
     }
@@ -537,8 +513,8 @@ public class Main extends Application {
                 }
             });
 
-            StackPane root = new StackPane();
-            root.getChildren().add(addHomeScreen());
+            //StackPane root = new StackPane();
+            //root.getChildren().add(addHomeScreen());
             border = new BorderPane();
             HBox hbox = new HBox();
             btnTest = new Button();
@@ -579,14 +555,16 @@ public class Main extends Application {
 
 
             test = new Pane();
-            BackgroundFill myBF = new BackgroundFill(Color.BLACK, new CornerRadii(1),
+            BackgroundFill myBF = new BackgroundFill(Color.GRAY, new CornerRadii(0),
                     new Insets(0.0,0.0,0.0,0.0));// or null for the padding
 //then you set to your node or container or layout
             test.setBackground(new Background(myBF));
             test.setMaxSize(113, 113);
             test.setMinSize(113, 113);
+            test.setMaxSize(116, 116);
+            test.setMinSize(116, 116);
 
-            test.setLayoutX(15);
+            test.setLayoutX(17);
             test.setLayoutY(85);
 
             test.getChildren().add(border);

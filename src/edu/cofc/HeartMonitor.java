@@ -7,6 +7,11 @@ import java.util.Random;
  */
 public class HeartMonitor implements Sensors<Double> {
     public boolean isReading = false;
+    private Random rand;
+
+    public HeartMonitor() {
+        this.rand = rand;
+    }
 
     @Override
     public void start() {
@@ -20,7 +25,6 @@ public class HeartMonitor implements Sensors<Double> {
 
     @Override
     public Double read() {
-        Random rand = new Random();
         double value = rand.nextDouble() + 0.7; //Random double between 0.7 and 1.7
         return value;
     }
