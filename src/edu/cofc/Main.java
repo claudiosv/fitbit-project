@@ -114,7 +114,6 @@ public class Main extends Application {
         GridPane.setValignment(btn1, VPos.CENTER);
         grid.add(btn1, 0, 1);
 
-
         return grid;
     }
 
@@ -161,31 +160,16 @@ public class Main extends Application {
             }
         });
 
-
         grid.add(category, 0, 0, 3, 1);
         grid.add(btnStop, 0, 2);
         grid.add(btnReset, 1, 2);
 
         if(heartHistory.heartMonitor.startHeart()) {
-            Runnable testingThread = new Runnable() {
-                public void run() {
-                    try {
-                        for (int i = 0; i < 40; i++) {
-                            //Read for twenty seconds
-                            System.out.printf("Heart Rate (BPM): %f\n", heartHistory.heartMonitor.readHeartRate());
-                            category.setText("Heart Rate (BPM): " + heartHistory.heartMonitor.readHeartRate());
-                            Thread.sleep(500);
-                        }
-                    } catch (InterruptedException e) {
-                        //thread interrupted display error
-                    }
-                }
-            };
-
-            //Thread testThread = new Thread(testingThread);
-            //testThread.start();
-            Platform.runLater(testingThread);
+            heartHistory.heartMonitor.bpmProperty().addListener((observable, oldValue, newValue) -> {
+                Platform.runLater(() -> category.setText(String.format("%.0f BPM", newValue)));
+            });
         }
+
         return grid;
     }
 
@@ -435,8 +419,6 @@ public class Main extends Application {
                 Platform.runLater(() -> category.setText(String.format("%d", newValue.intValue())));
             });
         }
-
-
 
         return grid;
     }

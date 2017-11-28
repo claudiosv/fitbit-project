@@ -1,5 +1,7 @@
 package edu.cofc;
 
+import javafx.beans.property.SimpleDoubleProperty;
+
 /**
  * Created by Claudio on 20/11/2017.
  */
@@ -8,13 +10,21 @@ public class Heart {
     private HeartMonitor heart = null;
     private int secondsPassed;
     private double heartTotal;
-    public double bpm;
+    private SimpleDoubleProperty bpm;
+
+    public double getBpm() {
+        return bpm.get();
+    }
+
+    public SimpleDoubleProperty bpmProperty() {
+        return bpm;
+    }
 
     public Heart() {
+        bpm = new SimpleDoubleProperty(0.0);
         heart = new HeartMonitor();
         secondsPassed = 0;
         heartTotal = 0.0;
-        bpm = 0;
     }
 
     /**
@@ -37,9 +47,8 @@ public class Heart {
                             secondsPassed++;
 
                             //Update our bpm
-                            bpm = (heartTotal / secondsPassed) * 60;
+                            bpm.set((heartTotal / secondsPassed) * 60);
 
-                            //trigger event
 
                             Thread.sleep(1000);
                         }
@@ -61,24 +70,16 @@ public class Heart {
      * Stops the heart monitor
      */
     public void stopHeart() {
-        heart.isReading = false;
+        heart.stop();
     }
 
     /**
      * Resets the values of the heart object
      */
     public void resetHeart() {
-        bpm = 0.0;
+        bpm.set(0.0);
         heartTotal = 0.0;
         secondsPassed = 0;
-    }
-
-    /**
-     * Returns out beats per minute
-     * @return
-     */
-    public double readHeartRate() {
-        return bpm;
     }
 
     /**
@@ -86,6 +87,6 @@ public class Heart {
      * @return
      */
     public HeartRate saveHeartRate() {
-        return new HeartRate(bpm);
+        return new HeartRate(bpm.get());
     }
 }
