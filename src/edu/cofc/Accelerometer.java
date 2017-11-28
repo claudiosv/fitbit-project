@@ -7,6 +7,11 @@ import java.util.Random;
  */
 public class Accelerometer implements Sensors<Integer> {
     public boolean isReading = false;
+    Random accelerometer = null;
+
+    public Accelerometer() {
+        accelerometer = new Random();
+    }
 
     @Override
     public void start() {
@@ -20,8 +25,7 @@ public class Accelerometer implements Sensors<Integer> {
 
     @Override
     public Integer read() {
-        Random accel = new Random();
-        int reading = accel.nextInt(2000);
+        int reading = accelerometer.nextInt(2000);
         return reading;
     }
 }
