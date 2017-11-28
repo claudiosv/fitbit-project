@@ -1,10 +1,7 @@
 package edu.cofc;
 //TODO: Timer Fix button stretch
 //TODO: Timer Add Stop Button (set remaingTime 0)
-//TODO: Step Timer fix label updates
-//TODO: Step Timer add steps on save screen
-//TODO: Sleep monitor make look better
-//TODO: add stage close event
+//TODO: Step Counter add steps on save screen
 
 import javafx.application.Application;
 import javafx.application.Platform;
