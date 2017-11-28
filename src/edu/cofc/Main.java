@@ -474,16 +474,7 @@ public class Main extends Application {
         grid.setPadding(new Insets(0, 5, 0, 5));
 
         // Category in column 2, row 1
-        Label category = new Label("10:00 AM");
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
-        category.setText(sdf.format(cal.getTime()));
-        GridPane.setHalignment(category, HPos.CENTER);
 
-        category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
-        category.setTextFill(Color.WHITE);
-
-        //grid.add(category, 0, 0, 3, 1);
 
         Button btn1 = new Button();
         //btn1.setStyle("-fx-background-color: #e5e5e5;");
@@ -609,9 +600,16 @@ public class Main extends Application {
                 }
             });
             Label category = new Label("10:00 AM");
-            Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
-            category.setText(sdf.format(cal.getTime()));
+
+            CalendarObservable cal = new CalendarObservable();
+            cal.currentTime.addListener((observable, oldValue, newValue) -> {
+
+                Platform.runLater(() ->
+                    category.setText(newValue)
+                );
+
+            });
+            category.setText(cal.currentTime.get());
             //category.setAlignment(Pos.TOP_RIGHT);
             //btnTest.setAlignment(Pos.TOP_LEFT);
             hbox.setPadding(new Insets(2,2,2,2));
