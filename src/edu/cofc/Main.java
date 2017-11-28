@@ -654,7 +654,7 @@ public class Main extends Application {
         scene = new Scene(mainBox, 150, 286);
         scene.getStylesheets().add
                 (getClass().getResource("button.css").toExternalForm());
-        primaryStage.setTitle("FitBit Not a Simulator");
+        primaryStage.setTitle("FitBit");
         primaryStage.setScene(scene);
         primaryStage.setOnCloseRequest(event -> {
             stepHistory.stepCounter.stopCounter();
