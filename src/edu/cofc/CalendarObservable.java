@@ -29,7 +29,7 @@ public class CalendarObservable {
             public void run() {
                 update.run();
             }
-        }, time % 60000, 60000);
+        }, 60000 - (time % 60000), 60000);
 
         update.run();
     }

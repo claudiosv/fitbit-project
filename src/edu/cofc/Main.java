@@ -5,28 +5,25 @@ package edu.cofc;
 //TODO: Step Timer add steps on save screen
 //TODO: Sleep monitor make look better
 //TODO: add stage close event
-import javafx.application.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Task;
-import javafx.event.*;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.stage.*;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import javafx.stage.Stage;
 
 public class Main extends Application {
     //UI Needs to have access to our Classes
@@ -54,7 +51,7 @@ public class Main extends Application {
         category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
 
         grid.add(category, 0, 0, 3, 1);
-        if(sleepHistory.sleepTracker.startSleepTracker()) {
+        if (sleepHistory.sleepTracker.startSleepTracker()) {
             Runnable testRun = new Runnable() {
                 public void run() {
                     try {
@@ -63,7 +60,7 @@ public class Main extends Application {
                             Platform.runLater(() -> category.setText("Waiting to fall asleep"));
                             Thread.sleep(500);
                         }
-                        while(sleepHistory.sleepTracker.isSleeping()) {
+                        while (sleepHistory.sleepTracker.isSleeping()) {
                             System.out.println("waiting to wake up");
                             Platform.runLater(() -> category.setText("Waiting to wake up"));
                             Thread.sleep(500);
@@ -78,8 +75,7 @@ public class Main extends Application {
                         System.out.printf("Seconds Asleep: %d\n", lastNight.secondsAsleep());
 
                         Platform.runLater(() -> category.setText("Fell Asleep At: " + lastNight.getSleepTime() + "\nWoke Up At: " + lastNight.getWakeTime() + "\nSeconds Asleep: " + lastNight.secondsAsleep()));
-                    }
-                    catch (InterruptedException e) {
+                    } catch (InterruptedException e) {
                         //thread interrupted, display error
                     }
                 }
@@ -132,7 +128,7 @@ public class Main extends Application {
         Label category = new Label();
         category.setWrapText(true);
 
-        category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+        category.setFont(Font.font("Arial", FontWeight.BOLD, 15));
 
         Button btnStop = new Button();
         Image imageStop = new Image(getClass().getResourceAsStream("002-stop.png"));
@@ -169,17 +165,16 @@ public class Main extends Application {
         grid.add(btnStop, 0, 2);
         grid.add(btnReset, 1, 2);
 
-        if(heartHistory.heartMonitor.startHeart()) {
+        if (heartHistory.heartMonitor.startHeart()) {
             heartHistory.heartMonitor.bpmProperty().addListener((observable, oldValue, newValue) -> {
-                Platform.runLater(() -> category.setText(String.format("%.0f BPM", newValue)));
+                Platform.runLater(() -> category.setText(String.format("%.0f bpm", newValue)));
             });
         }
 
         return grid;
     }
 
-    public GridPane addStoppedHeartMonitor()
-    {
+    public GridPane addStoppedHeartMonitor() {
         GridPane grid = new GridPane();
         grid.setHgap(5);
         grid.setVgap(5);
@@ -204,7 +199,7 @@ public class Main extends Application {
         grid.add(btnSave, 2, 2);
         return grid;
 
-}
+    }
 
     public GridPane addSyncData() {
         GridPane grid = new GridPane();
@@ -218,7 +213,7 @@ public class Main extends Application {
         category.setMaxWidth(113);
 
         category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
-        if(sync.addCompanion()) {
+        if (sync.addCompanion()) {
             Runnable syncRunnable = new Runnable() {
                 public void run() {
                     try {
@@ -264,7 +259,7 @@ public class Main extends Application {
         // Category in column 2, row 1
 
 
-        Label category = new Label("100");
+        Label category = new Label("100 secs");
         Slider slider = new Slider();
         slider.setMin(1);
         slider.setMax(300);
@@ -278,14 +273,14 @@ public class Main extends Application {
         slider.setMinWidth(100);
         slider.valueProperty().addListener((obs, oldval, newVal) ->
                 slider.setValue(newVal.intValue()));
-        slider.valueProperty().addListener((observable, oldValue, newValue) ->  {
+        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
 
-                category.setText(String.format("%.0f", newValue));
+            category.setText(String.format("%.0f secs", newValue));
 
         });
         category.setWrapText(true);
 
-        category.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        category.setFont(Font.font("Arial", FontWeight.BOLD, 15));
         Button btn1 = new Button();
         Image imageDecline = new Image(getClass().getResourceAsStream("002-play-button.png"));
         ImageView imageView = new ImageView(imageDecline);
@@ -293,17 +288,14 @@ public class Main extends Application {
         imageView.setFitWidth(32);
         btn1.setGraphic(imageView);
         timer.remainingTimeProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue.intValue() <= 0)
-            {
+            if (newValue.intValue() <= 0) {
                 Platform.runLater(() -> border.setCenter(addFinishedTimer()));
-            }
-            else
-            {
-                Platform.runLater(() -> category.setText(String.format("%d", newValue.intValue())));
+            } else {
+                Platform.runLater(() -> category.setText(String.format("%d secs", newValue.intValue())));
             }
         });
         btn1.setOnAction(event ->
-                timer.startTimer((int)slider.getValue())
+                timer.startTimer((int) slider.getValue())
 
         );
         grid.add(slider, 0, 1);
@@ -326,11 +318,12 @@ public class Main extends Application {
 
         Label category = new Label("Timer completed");
 
+        category.setMaxWidth(113);
         category.setWrapText(true);
 
         category.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
-        grid.add(category, 0, 0, 3, 1);
+        grid.add(category, 0, 0);
 
 
         return grid;
@@ -377,7 +370,7 @@ public class Main extends Application {
         Label category = new Label();
         category.setWrapText(true);
 
-        category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+        category.setFont(Font.font("Arial", FontWeight.BOLD, 15));
 
         Button btnStop = new Button();
         Image imageStop = new Image(getClass().getResourceAsStream("002-stop.png"));
@@ -415,9 +408,9 @@ public class Main extends Application {
         grid.add(btnStop, 0, 2);
         grid.add(btnReset, 1, 2);
 
-        if(stepHistory.stepCounter.startCounter()) {
+        if (stepHistory.stepCounter.startCounter()) {
             stepHistory.stepCounter.numStepsProperty().addListener((observable, oldValue, newValue) -> {
-                Platform.runLater(() -> category.setText(String.format("%d", newValue.intValue())));
+                Platform.runLater(() -> category.setText(String.format("%d steps", newValue.intValue())));
             });
         }
 
@@ -461,7 +454,7 @@ public class Main extends Application {
 
         Button btn1 = new Button();
         //btn1.setStyle("-fx-background-color: #e5e5e5;");
-       // btn1.setText("T");
+        // btn1.setText("T");
         Image imageTimer = new Image(getClass().getResourceAsStream("007-stopwatch.png"));
         ImageView imageViewTimer = new ImageView(imageTimer);
         imageViewTimer.setFitHeight(16);
@@ -547,102 +540,102 @@ public class Main extends Application {
         grid.add(btn5, 2, 3);
 
         BackgroundFill myBF = new BackgroundFill(Color.BLACK, new CornerRadii(1),
-                new Insets(0.0,0.0,0.0,0.0));// or null for the padding
+                new Insets(0.0, 0.0, 0.0, 0.0));// or null for the padding
 //then you set to your node or container or layout
         grid.setBackground(new Background(myBF));
 
         return grid;
     }
-        @Override
-        public void start(Stage primaryStage) throws Exception {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
 
 
-            //StackPane root = new StackPane();
-            //root.getChildren().add(addHomeScreen());
-            border = new BorderPane();
-            HBox hbox = new HBox();
-            btnTest = new Button();
-            btnTest.setVisible(false);
-            Image imageBack = new Image(getClass().getResourceAsStream("001-back.png"));
-            ImageView imageViewBack = new ImageView(imageBack);
-            imageViewBack.setFitHeight(12);
-            imageViewBack.setFitWidth(12);
-            btnTest.setGraphic(imageViewBack);
-            btnTest.setStyle(
-                            "-fx-min-width: 16px; " +
-                            "-fx-min-height: 16px; " +
-                            "-fx-max-width: 16px; " +
-                            "-fx-max-height: 16px;"
-            );
-            btnTest.setOnAction(new EventHandler<ActionEvent>() {
+        //StackPane root = new StackPane();
+        //root.getChildren().add(addHomeScreen());
+        border = new BorderPane();
+        HBox hbox = new HBox();
+        btnTest = new Button();
+        btnTest.setVisible(false);
+        Image imageBack = new Image(getClass().getResourceAsStream("001-back.png"));
+        ImageView imageViewBack = new ImageView(imageBack);
+        imageViewBack.setFitHeight(12);
+        imageViewBack.setFitWidth(12);
+        btnTest.setGraphic(imageViewBack);
+        btnTest.setStyle(
+                "-fx-min-width: 16px; " +
+                        "-fx-min-height: 16px; " +
+                        "-fx-max-width: 16px; " +
+                        "-fx-max-height: 16px;"
+        );
+        btnTest.setOnAction(new EventHandler<ActionEvent>() {
 
-                @Override
-                public void handle(ActionEvent event) {
-                    border.setCenter(addHomeScreen());
-                    btnTest.setVisible(false);
-                }
-            });
-            Label category = new Label("10:00 AM");
+            @Override
+            public void handle(ActionEvent event) {
+                border.setCenter(addHomeScreen());
+                btnTest.setVisible(false);
+            }
+        });
+        Label category = new Label("10:00 AM");
 
-            CalendarObservable cal = new CalendarObservable();
-            cal.currentTime.addListener((observable, oldValue, newValue) -> {
+        CalendarObservable cal = new CalendarObservable();
+        cal.currentTime.addListener((observable, oldValue, newValue) -> {
 
-                Platform.runLater(() ->
+            Platform.runLater(() ->
                     category.setText(newValue)
-                );
+            );
 
-            });
-            category.setText(cal.currentTime.get());
-            //category.setAlignment(Pos.TOP_RIGHT);
-            //btnTest.setAlignment(Pos.TOP_LEFT);
-            hbox.setPadding(new Insets(2,2,2,2));
-            Region reg = new Region();
-            reg.setPrefWidth(20);
-            hbox.getChildren().add(btnTest);
-            hbox.getChildren().add(reg);
-            hbox.getChildren().add(category);
+        });
+        category.setText(cal.currentTime.get());
+        //category.setAlignment(Pos.TOP_RIGHT);
+        //btnTest.setAlignment(Pos.TOP_LEFT);
+        hbox.setPadding(new Insets(2, 2, 2, 2));
+        Region reg = new Region();
+        reg.setPrefWidth(20);
+        hbox.getChildren().add(btnTest);
+        hbox.getChildren().add(reg);
+        hbox.getChildren().add(category);
 
-            border.setTop(hbox);
-            border.setCenter(addHomeScreen());
+        border.setTop(hbox);
+        border.setCenter(addHomeScreen());
 
-            Pane mainBox = new Pane();
-            Image watch = new Image(getClass().getResourceAsStream("watch.jpg"));
-            BackgroundImage backgroundImage = new BackgroundImage(watch, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-            mainBox.setBackground(new Background(backgroundImage));
+        Pane mainBox = new Pane();
+        Image watch = new Image(getClass().getResourceAsStream("watch.jpg"));
+        BackgroundImage backgroundImage = new BackgroundImage(watch, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        mainBox.setBackground(new Background(backgroundImage));
 
 
-
-            test = new Pane();
-            BackgroundFill myBF = new BackgroundFill(Color.BLACK, new CornerRadii(0),
-                    new Insets(0.0,0.0,0.0,0.0));// or null for the padding
+        test = new Pane();
+        BackgroundFill myBF = new BackgroundFill(Color.BLACK, new CornerRadii(0),
+                new Insets(0.0, 0.0, 0.0, 0.0));// or null for the padding
 //then you set to your node or container or layout
-            test.setBackground(new Background(myBF));
-            test.setMaxSize(113, 113);
-            test.setMinSize(113, 113);
-            test.setMaxSize(116, 116);
-            test.setMinSize(116, 116);
+        test.setBackground(new Background(myBF));
+        test.setMaxSize(113, 113);
+        test.setMinSize(113, 113);
+        test.setMaxSize(116, 116);
+        test.setMinSize(116, 116);
 
-            test.setLayoutX(17);
-            test.setLayoutY(85);
+        test.setLayoutX(17);
+        test.setLayoutY(85);
 
-            test.getChildren().add(border);
-            mainBox.getChildren().add(test);
-            scene = new Scene(mainBox, 150, 286);
-            scene.getStylesheets().add
-                    (getClass().getResource("button.css").toExternalForm());
-            primaryStage.setTitle("FitBit Not a Simulator");
-            primaryStage.setScene(scene);
-            primaryStage.setOnCloseRequest(event -> {
-                stepHistory.stepCounter.stopCounter();
-                sleepHistory.sleepTracker.stopSleepTracker();
-                heartHistory.heartMonitor.stopHeart();
-                timer.stopTimer();
-                System.exit(0);
-            });
-            primaryStage.show();
-        }
+        test.getChildren().add(border);
+        mainBox.getChildren().add(test);
+        scene = new Scene(mainBox, 150, 286);
+        scene.getStylesheets().add
+                (getClass().getResource("button.css").toExternalForm());
+        primaryStage.setTitle("FitBit Not a Simulator");
+        primaryStage.setScene(scene);
+        primaryStage.setOnCloseRequest(event -> {
+            stepHistory.stepCounter.stopCounter();
+            sleepHistory.sleepTracker.stopSleepTracker();
+            heartHistory.heartMonitor.stopHeart();
+            timer.stopTimer();
+            System.exit(0);
+        });
+        primaryStage.show();
+    }
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
         launch(args);
 
          /* How the step counter works: (This will be activated by switching to step counter screen and pressing start)
