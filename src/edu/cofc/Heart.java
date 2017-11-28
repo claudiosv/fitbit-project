@@ -39,6 +39,8 @@ public class Heart {
                             //Update our bpm
                             bpm = (heartTotal / secondsPassed) * 60;
 
+                            //trigger event
+
                             Thread.sleep(1000);
                         }
                     }

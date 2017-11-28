@@ -1,6 +1,5 @@
 package edu.cofc;
 
-//TODO:
 import javafx.application.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -432,23 +431,9 @@ public class Main extends Application {
         grid.add(btnReset, 1, 2);
 
         if(stepHistory.stepCounter.startCounter()) {
-            Runnable testingThread = new Runnable() {
-                public void run() {
-                    try {
-                        //This will be a while(onStepCountScreen) {} using sleep for testing purposes
-                        //Update the text on screen
-                        Thread.sleep(2000);
-                        System.out.printf("Step Count: %d\n", stepHistory.stepCounter.readStepCount());
-                        category.setText("Step Count: " + stepHistory.stepCounter.readStepCount());
-
-
-                    } catch (InterruptedException e) {
-                        //thread interrupted display error
-                    }
-                }
-            };
-
-            Platform.runLater(testingThread);
+            stepHistory.stepCounter.numStepsProperty().addListener((observable, oldValue, newValue) -> {
+                Platform.runLater(() -> category.setText(String.format("%d", newValue.intValue())));
+            });
         }
 
 
