@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/fitbit-project.iml" filepath="$PROJECT_DIR$/fitbit-project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/claudioAlexHealthMonitor.iml" filepath="$PROJECT_DIR$/claudioAlexHealthMonitor.iml" />
     </modules>
   </component>
 </project>
