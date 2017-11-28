@@ -1,5 +1,7 @@
 package edu.cofc;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * Created by Claudio on 20/11/2017.
  */
@@ -8,14 +10,14 @@ public class Steps {
 
     private Thread stepThread;
     private Accelerometer sensor;
-    private int numSteps;
+    private SimpleIntegerProperty numSteps;
 
     /**
      * Initialize numSteps to zero
      * Creates and starts our Accelerometer step reader
      */
     public Steps() {
-        numSteps = 0;
+        numSteps = new SimpleIntegerProperty(0);
         sensor = new Accelerometer();
     }
 
@@ -32,7 +34,7 @@ public class Steps {
                         while (sensor.isReading) {
                             int speed = sensor.read();
                             if (speed > walkingSpeed)
-                                numSteps++;
+                                numSteps.setValue(numSteps.get() + 1);
 
                             Thread.sleep(500);
                         }
@@ -63,14 +65,14 @@ public class Steps {
      * Stops the sensor from reading steps
      */
     public void resetSteps() {
-        numSteps = 0;
+        numSteps.setValue(0);
     }
 
-    /**
-     * Returns the number of steps taken
-     * @return
-     */
-    public int readStepCount() {
+    public int getNumSteps() {
+        return numSteps.get();
+    }
+
+    public SimpleIntegerProperty numStepsProperty() {
         return numSteps;
     }
 
@@ -79,6 +81,6 @@ public class Steps {
      * @return
      */
     public DailySteps saveDailyCount() {
-        return new DailySteps(numSteps);
+        return new DailySteps(numSteps.get());
     }
 }

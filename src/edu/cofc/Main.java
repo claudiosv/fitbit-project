@@ -170,11 +170,11 @@ public class Main extends Application {
             Runnable testingThread = new Runnable() {
                 public void run() {
                     try {
-                        for (int i = 0; i < 40; i++) {
+                        for(int i = 0; i < 40; i++) {
                             //Read for twenty seconds
                             System.out.printf("Heart Rate (BPM): %f\n", heartHistory.heartMonitor.readHeartRate());
                             category.setText("Heart Rate (BPM): " + heartHistory.heartMonitor.readHeartRate());
-                            Thread.sleep(0);//500);
+                            Thread.sleep(250);
                         }
                     } catch (InterruptedException e) {
                         //thread interrupted display error
@@ -404,32 +404,15 @@ public class Main extends Application {
             }
         });
 
-
         grid.add(category, 0, 0, 3, 1);
         grid.add(btnStop, 0, 2);
         grid.add(btnReset, 1, 2);
 
         if(stepHistory.stepCounter.startCounter()) {
-            Runnable testingThread = new Runnable() {
-                public void run() {
-                    try {
-                        //This will be a while(onStepCountScreen) {} using sleep for testing purposes
-                        //Update the text on screen
-                        Thread.sleep(2000);
-                        System.out.printf("Step Count: %d\n", stepHistory.stepCounter.readStepCount());
-                        category.setText("Step Count: " + stepHistory.stepCounter.readStepCount());
-
-
-                    } catch (InterruptedException e) {
-                        //thread interrupted display error
-                    }
-                }
-            };
-
-            Platform.runLater(testingThread);
+            stepHistory.stepCounter.numStepsProperty().addListener((observable, oldValue, newValue) -> {
+                Platform.runLater(() -> category.setText(String.format("%d", newValue.intValue())));
+            });
         }
-
-
 
         return grid;
     }
