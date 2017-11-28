@@ -1,5 +1,10 @@
 package edu.cofc;
-
+//TODO: Timer Fix button stretch
+//TODO: Timer Add Stop Button (set remaingTime 0)
+//TODO: Step Timer fix label updates
+//TODO: Step Timer add steps on save screen
+//TODO: Sleep monitor make look better
+//TODO: add stage close event
 import javafx.application.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -45,7 +50,7 @@ public class Main extends Application {
         // Category in column 2, row 1
         Label category = new Label();
         category.setWrapText(true);
-
+        category.setMaxWidth(113);
         category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
 
         grid.add(category, 0, 0, 3, 1);
@@ -55,16 +60,16 @@ public class Main extends Application {
                     try {
                         while (!sleepHistory.sleepTracker.isSleeping()) {
                             System.out.println("waiting to fall asleep");
-                            category.setText("Waiting to fall asleep");
+                            Platform.runLater(() -> category.setText("Waiting to fall asleep"));
                             Thread.sleep(500);
                         }
                         while(sleepHistory.sleepTracker.isSleeping()) {
                             System.out.println("waiting to wake up");
-                            category.setText("Waiting to wake up");
+                            Platform.runLater(() -> category.setText("Waiting to wake up"));
                             Thread.sleep(500);
                         }
 
-                        category.setText("Saving sleep times");
+                        Platform.runLater(() -> category.setText("Saving sleep times"));
                         sleepHistory.addSleepTimes(sleepHistory.sleepTracker.saveNightsSleep());
 
                         NightsSleep lastNight = sleepHistory.getSleepTimes(0);
@@ -72,7 +77,7 @@ public class Main extends Application {
                         System.out.printf("Woke Up At: %s\n", lastNight.getWakeTime());
                         System.out.printf("Seconds Asleep: %d\n", lastNight.secondsAsleep());
 
-                        category.setText("Fell Asleep At: " + lastNight.getSleepTime() + "\nWoke Up At: " + lastNight.getWakeTime() + "\nSeconds Asleep: " + lastNight.secondsAsleep());
+                        Platform.runLater(() -> category.setText("Fell Asleep At: " + lastNight.getSleepTime() + "\nWoke Up At: " + lastNight.getWakeTime() + "\nSeconds Asleep: " + lastNight.secondsAsleep()));
                     }
                     catch (InterruptedException e) {
                         //thread interrupted, display error
@@ -210,6 +215,7 @@ public class Main extends Application {
         // Category in column 2, row 1
         Label category = new Label();
         category.setWrapText(true);
+        category.setMaxWidth(113);
 
         category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
         if(sync.addCompanion()) {
@@ -217,15 +223,15 @@ public class Main extends Application {
                 public void run() {
                     try {
                         System.out.println("Starting the sync process");
-                        category.setText("Starting the sync process");
+                        Platform.runLater(() -> category.setText("Starting the sync process"));
                         sync.syncData("Empty Data to send");
 
                         Thread.sleep(2550);
                         System.out.println("Sync process completed");
-                        category.setText("Sync process completed");
+                        Platform.runLater(() -> category.setText("Sync process completed"));
 
-                        category.setText("Username: " + user.username + "\nGender: " + user.getGender() +
-                                "\nBirthday: " + user.getBirthday() + "\nHeight: " + user.getHeight() + "\nWeight: " + user.getWeight());
+                        Platform.runLater(() -> category.setText("Username: " + user.username + "\nGender: " + user.getGender() +
+                                "\nBirthday: " + user.getBirthday() + "\nHeight: " + user.getHeight() + "\nWeight: " + user.getWeight()));
 
 
                         System.out.println("User: " + user);
@@ -243,7 +249,7 @@ public class Main extends Application {
             Thread syncThread = new Thread(syncRunnable);
             syncThread.start();
         }
-        grid.add(category, 0, 0, 3, 1);
+        grid.add(category, 0, 0);
 
 
         return grid;
@@ -258,7 +264,7 @@ public class Main extends Application {
         // Category in column 2, row 1
 
 
-        Label category = new Label("140");
+        Label category = new Label("100");
         Slider slider = new Slider();
         slider.setMin(1);
         slider.setMax(300);
@@ -272,12 +278,10 @@ public class Main extends Application {
         slider.setMinWidth(100);
         slider.valueProperty().addListener((obs, oldval, newVal) ->
                 slider.setValue(newVal.intValue()));
-        slider.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
+        slider.valueProperty().addListener((observable, oldValue, newValue) ->  {
 
-                category.setText(String.format("%.0f", new_val));
-            }
+                category.setText(String.format("%.0f", newValue));
+
         });
         category.setWrapText(true);
 
@@ -288,23 +292,20 @@ public class Main extends Application {
         imageView.setFitHeight(16);
         imageView.setFitWidth(32);
         btn1.setGraphic(imageView);
-        btn1.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                timer.remainingTimeProperty().addListener((observable, oldValue, newValue) -> {
-                    if(newValue.intValue() <= 0)
-                    {
-                        Platform.runLater(() -> border.setCenter(addFinishedTimer()));
-                    }
-                    else
-                    {
-                        Platform.runLater(() -> category.setText(String.format("%d", newValue.intValue())));
-                    }
-                });
-                timer.startTimer((int)slider.getValue());
+        timer.remainingTimeProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue.intValue() <= 0)
+            {
+                Platform.runLater(() -> border.setCenter(addFinishedTimer()));
+            }
+            else
+            {
+                Platform.runLater(() -> category.setText(String.format("%d", newValue.intValue())));
             }
         });
+        btn1.setOnAction(event ->
+                timer.startTimer((int)slider.getValue())
+
+        );
         grid.add(slider, 0, 1);
         grid.add(btn1, 0, 2);
 
@@ -442,7 +443,7 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
                 stepHistory.addDailyCount(stepHistory.stepCounter.saveDailyCount());
-                //TODO: saved
+                //TODO: show label for saved successfully
             }
         });
         grid.add(btnSave, 2, 2);
@@ -629,8 +630,15 @@ public class Main extends Application {
             scene = new Scene(mainBox, 150, 286);
             scene.getStylesheets().add
                     (getClass().getResource("button.css").toExternalForm());
-            primaryStage.setTitle("Hello World!");
+            primaryStage.setTitle("FitBit Not a Simulator");
             primaryStage.setScene(scene);
+            primaryStage.setOnCloseRequest(event -> {
+                stepHistory.stepCounter.stopCounter();
+                sleepHistory.sleepTracker.stopSleepTracker();
+                heartHistory.heartMonitor.stopHeart();
+                timer.stopTimer();
+                System.exit(0);
+            });
             primaryStage.show();
         }
 

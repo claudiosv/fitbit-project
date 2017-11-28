@@ -42,7 +42,6 @@ public class Timer {
                 try {
                     while (remainingTime.get() > 0 && timerCounting) {
                         remainingTime.setValue(remainingTime.get() - 1);
-                        System.out.println("Subtracted 1");
                         Thread.sleep(1000);
                     }
                 }
