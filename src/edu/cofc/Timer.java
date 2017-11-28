@@ -38,10 +38,6 @@ public class Timer {
                     remainingTime = 0;
                     timerCounting = false;
                 }
-
-                //Somehow needs to signal to UI when this is completed. Create a 'signalAlarm' method?
-                System.out.println("Timer completed");
-
             }
         };
 
@@ -56,5 +52,9 @@ public class Timer {
      */
     public void stopTimer() {
         timerCounting = false;
+    }
+
+    public int secondsRemaining() {
+        return remainingTime;
     }
 }
