@@ -1,5 +1,6 @@
 package edu.cofc;
 
+//TODO:
 import javafx.application.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -174,7 +175,7 @@ public class Main extends Application {
                             //Read for twenty seconds
                             System.out.printf("Heart Rate (BPM): %f\n", heartHistory.heartMonitor.readHeartRate());
                             category.setText("Heart Rate (BPM): " + heartHistory.heartMonitor.readHeartRate());
-                            Thread.sleep(0);//500);
+                            Thread.sleep(500);
                         }
                     } catch (InterruptedException e) {
                         //thread interrupted display error
@@ -276,7 +277,7 @@ public class Main extends Application {
 
         Label category = new Label("140");
         Slider slider = new Slider();
-        slider.setMin(0);
+        slider.setMin(1);
         slider.setMax(300);
         slider.setValue(100);
         slider.setShowTickLabels(false);
@@ -311,7 +312,7 @@ public class Main extends Application {
                 timer.remainingTimeProperty().addListener((observable, oldValue, newValue) -> {
                     if(newValue.intValue() <= 0)
                     {
-                        //completed
+                        Platform.runLater(() -> border.setCenter(addFinishedTimer()));
                     }
                     else
                     {
@@ -323,6 +324,27 @@ public class Main extends Application {
         });
         grid.add(slider, 0, 1);
         grid.add(btn1, 0, 2);
+
+        grid.add(category, 0, 0, 3, 1);
+
+
+        return grid;
+    }
+
+    public GridPane addFinishedTimer() {
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(0, 5, 0, 5));
+
+        // Category in column 2, row 1
+
+
+        Label category = new Label("Timer completed");
+
+        category.setWrapText(true);
+
+        category.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
         grid.add(category, 0, 0, 3, 1);
 
@@ -435,65 +457,17 @@ public class Main extends Application {
     }
 
     public GridPane addStoppedStepCounter() {
-        //just start button
         GridPane grid = new GridPane();
         grid.setHgap(5);
         grid.setVgap(5);
         grid.setPadding(new Insets(0, 5, 0, 5));
 
         // Category in column 2, row 1
-        Label category = new Label();
-        category.setWrapText(true);
-
-        category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
-        Button btn1 = new Button();
-        Image imageDecline = new Image(getClass().getResourceAsStream("003-heartbeat.png"));
-        ImageView imageView = new ImageView(imageDecline);
-        imageView.setFitHeight(32);
-        imageView.setFitWidth(32);
-        btn1.setGraphic(imageView);
-
-        btn1.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-            }
-        });
-
-        Button btn2 = new Button();
-        Image imageStop = new Image(getClass().getResourceAsStream("002-stop.png"));
-        ImageView imageViewStop = new ImageView(imageStop);
-        imageViewStop.setFitHeight(32);
-        imageViewStop.setFitWidth(32);
-        btn2.setGraphic(imageViewStop);
-
-        btn2.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                stepHistory.stepCounter.stopCounter();
-            }
-        });
-
-        Button btnReset = new Button();
-        Image imageReset = new Image(getClass().getResourceAsStream("001-reload.png"));
-        ImageView imageViewReset = new ImageView(imageReset);
-        imageViewReset.setFitHeight(32);
-        imageViewReset.setFitWidth(32);
-        btnReset.setGraphic(imageViewReset);
-
-        btnReset.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                stepHistory.stepCounter.resetSteps();
-            }
-        });
         Button btnSave = new Button();
-        Image imageSave = new Image(getClass().getResourceAsStream("003-heartbeat.png"));
+        Image imageSave = new Image(getClass().getResourceAsStream("003-save.png"));
         ImageView imageViewSave = new ImageView(imageSave);
-        imageViewSave.setFitHeight(32);
-        imageViewSave.setFitWidth(32);
+        imageViewSave.setFitHeight(16);
+        imageViewSave.setFitWidth(16);
         btnSave.setGraphic(imageViewSave);
 
         btnSave.setOnAction(new EventHandler<ActionEvent>() {
@@ -501,14 +475,9 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
                 stepHistory.addDailyCount(stepHistory.stepCounter.saveDailyCount());
-
+                //TODO: saved
             }
         });
-
-        grid.add(category, 0, 0, 3, 1);
-        grid.add(btn1, 0, 1);
-        grid.add(btn2, 0, 2);
-        grid.add(btnReset, 1, 2);
         grid.add(btnSave, 2, 2);
         return grid;
     }
