@@ -1,5 +1,15 @@
 package edu.cofc;
-
+//TODO: redesign classes and packages
+/*
+Reorganise into folders/packages
+Rename some files
+Consider GRASP principles more
+Make builders and factories
+Be more clear about Memento and Observer pattern
+Implement State pattern for UI screens
+Apply more MVC i.e. screens and parts need to be seen as views
+ */
+//TODO: unit testing
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
