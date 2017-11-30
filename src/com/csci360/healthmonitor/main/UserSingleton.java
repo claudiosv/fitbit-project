@@ -5,14 +5,26 @@ import java.util.Date;
 /**
  * Created by Claudio on 20/11/2017.
  */
-public class User {
-    //User Attributes
+public class UserSingleton {
+    //UserSingleton Attributes
     public String username;
     private String password;
     private Date birthday;
     private int height;
     private int weight;
     private String gender;
+    private static UserSingleton instance;
+
+    protected UserSingleton()
+    {
+    }
+
+    public static UserSingleton getInstance() {
+        if(instance == null) {
+            instance = new UserSingleton();
+        }
+        return instance;
+    }
 
     public void addLogin(String username, String password) {
         this.username = username;

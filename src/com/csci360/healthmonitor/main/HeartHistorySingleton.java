@@ -5,11 +5,21 @@ import java.util.ArrayList;
 /**
  * Created by Claudio on 20/11/2017.
  */
-public class HeartHistory {
+public class HeartHistorySingleton {
     private ArrayList<HeartRate> heartRates = new ArrayList<>();
     public Heart heartMonitor = new Heart();
+    private static HeartHistorySingleton instance = null;
 
-    public HeartHistory() { }
+    protected HeartHistorySingleton() {
+
+    }
+
+    public static HeartHistorySingleton getInstance() {
+        if(instance == null) {
+            instance = new HeartHistorySingleton();
+        }
+        return instance;
+    }
 
     /**
      * Adds a heart rate to our history

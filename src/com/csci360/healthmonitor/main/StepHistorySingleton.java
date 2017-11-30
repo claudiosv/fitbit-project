@@ -5,12 +5,20 @@ import java.util.ArrayList;
 /**
  * Created by Claudio on 20/11/2017.
  */
-public class StepHistory {
+public class StepHistorySingleton {
     private ArrayList<DailySteps> stepCounts = new ArrayList<DailySteps>();
     public Steps stepCounter = new Steps();
+    private static StepHistorySingleton instance = null;
 
-    public StepHistory() { }
+    protected StepHistorySingleton() {
+    }
 
+    public static StepHistorySingleton getInstance() {
+        if(instance == null) {
+            instance = new StepHistorySingleton();
+        }
+        return instance;
+    }
     /**
      * Adds a DailySteps object to history list
      * @param dailyCount

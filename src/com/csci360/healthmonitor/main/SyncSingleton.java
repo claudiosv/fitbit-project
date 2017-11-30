@@ -5,13 +5,21 @@ import java.util.Date;
 /**
  * Created by Claudio on 20/11/2017.
  */
-public class Sync {
+public class SyncSingleton {
     private Companion companionDevice;
-    private User deviceUser;
+    private UserSingleton deviceUser;
+    private static SyncSingleton instance = null;
 
-    public Sync(User userData) {
+    protected SyncSingleton() {
         companionDevice = new Companion();
-        deviceUser = userData;
+        deviceUser = deviceUser.getInstance();
+    }
+
+    public static SyncSingleton getInstance() {
+        if(instance == null) {
+            instance = new SyncSingleton();
+        }
+        return instance;
     }
 
     /**
@@ -30,7 +38,7 @@ public class Sync {
      */
     private void parseIncomingData(String data) {
         //data incoming would normally be to set up the user info
-        //So maybe at the original open of the app we sync data and this sets up the user
+        //So maybe at the original open of the app we syncSingleton data and this sets up the user
 
         //parse here, just using raw data for project purposes
         deviceUser.addLogin("admin", "password");
@@ -40,7 +48,7 @@ public class Sync {
     }
 
     /**
-     * Runs the sync operation
+     * Runs the syncSingleton operation
      * @param ourData
      */
     public void syncData(String ourData) {
@@ -51,7 +59,7 @@ public class Sync {
                         System.out.println("Send Failed");
                     }
 
-                    Thread.sleep(2500); //Sleep two and a half seconds to simulate the sync
+                    Thread.sleep(2500); //Sleep two and a half seconds to simulate the syncSingleton
 
                     String recvData = companionDevice.receive();
                     if(recvData == null) {

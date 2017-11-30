@@ -5,10 +5,21 @@ import java.util.ArrayList;
 /**
  * Created by Claudio on 20/11/2017.
  */
-public class SleepHistory {
+public class SleepHistorySingleton {
     public ArrayList<NightsSleep> sleepTimes = new ArrayList<>();
     public SleepTracker sleepTracker = new SleepTracker();
+    private static SleepHistorySingleton instance = null;
 
+    protected SleepHistorySingleton() {
+
+    }
+
+    public static SleepHistorySingleton getInstance() {
+        if(instance == null) {
+            instance = new SleepHistorySingleton();
+        }
+        return instance;
+    }
     public void addSleepTimes(NightsSleep sleep) {
         sleepTimes.add(sleep);
     }

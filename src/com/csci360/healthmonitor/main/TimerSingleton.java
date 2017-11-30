@@ -6,10 +6,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * Created by Claudio on 20/11/2017.
  */
-public class Timer {
+public class TimerSingleton {
     private boolean timerCounting;
     private SimpleIntegerProperty remainingTime;
-    Thread timerThread;
+    private Thread timerThread;
+    private static TimerSingleton instance = null;
 
     public int getRemainingTime() {
         return remainingTime.get();
@@ -19,11 +20,20 @@ public class Timer {
         return remainingTime;
     }
 
+
+
+    public static TimerSingleton getInstance() {
+        if(instance == null) {
+            instance = new TimerSingleton();
+        }
+        return instance;
+    }
+
     /**
-     * Timer constructor
+     * TimerSingleton constructor
      * Initializes all class variables to zero
      */
-    public Timer() {
+    protected TimerSingleton() {
         timerCounting = false;
         remainingTime = new SimpleIntegerProperty(0);
         timerThread = null;
@@ -49,9 +59,7 @@ public class Timer {
                     remainingTime.set(0);
                     timerCounting = false;
                 }
-
-                //Somehow needs to signal to UI when this is completed. Create a 'signalAlarm' method?
-                System.out.println("Timer completed");
+                System.out.println("TimerSingleton completed");
 
             }
         };

@@ -14,10 +14,12 @@ public class HeartRate {
         this.saveTime = new Date();
     }
 
+    //Gets the beats per minute
     public double getBpm() {
         return bpm;
     }
 
+    //Gets the time when the data was saved
     public Date getSaveTime() {
         return saveTime;
     }
