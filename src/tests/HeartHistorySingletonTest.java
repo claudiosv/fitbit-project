@@ -1,4 +1,4 @@
-package com.csci360.healthmonitor.test;
+package tests;
 
 import com.csci360.healthmonitor.main.*;
 import static org.junit.Assert.*;

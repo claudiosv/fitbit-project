@@ -1,29 +1,29 @@
-package com.csci360.healthmonitor.test;
+package tests;
 
 import com.csci360.healthmonitor.main.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 
-public class HeartMonitorTest {
-    HeartMonitor sensor;
+public class AccelerometerTest {
+    Accelerometer sensor;
 
     /**
      * Setting up our variables
      */
     @Before
     public void setup() throws Exception {
-        sensor = new HeartMonitor();
+        sensor = new Accelerometer();
     }
 
     /**
-     * Starts the heart monitor and makes sure the sensor is reading
+     * Starts the accelerometer and makes sure the sensor is reading
      */
     @Test
     public void testReading() {
         sensor.start();
         boolean isReading = sensor.isReading;
-        assertTrue("The HeartMonitor is reading", isReading);
+        assertTrue("The Accelerometer is reading", isReading);
     }
 
     /**
@@ -32,11 +32,11 @@ public class HeartMonitorTest {
      */
     @Test
     public void testAccelerometer() {
-        double sensorReading = sensor.read();
-        System.out.printf("Sensor Reading: %.1f\n", sensorReading);
+        int sensorReading = sensor.read();
+        System.out.printf("Sensor Reading: %d\n", sensorReading);
 
-        assertTrue("Reading is greater than 0.7", sensorReading > 0.7);
-        assertTrue("Reading is less than 1.7", sensorReading < 1.7);
+        assertTrue("Reading is greater than 0", sensorReading > 0);
+        assertTrue("Reading is less than 2000", sensorReading < 2000);
     }
 
     /**

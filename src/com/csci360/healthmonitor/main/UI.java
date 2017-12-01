@@ -18,7 +18,6 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class UI extends Application {
-    //UI Needs to have access to our Classes
     private UserSingleton userInstance = UserSingleton.getInstance();
     private StepHistorySingleton stepHistory = StepHistorySingleton.getInstance();
     private SleepHistorySingleton sleepHistory = SleepHistorySingleton.getInstance();
@@ -54,14 +53,9 @@ public class UI extends Application {
         );
 
         Label timeLabel = new Label("10:00 AM");
-
         CalendarObservable cal = new CalendarObservable();
         cal.currentTime.addListener((observable, oldValue, newValue) -> {
-
-            Platform.runLater(() ->
-                    timeLabel.setText(newValue)
-            );
-
+            Platform.runLater(() -> timeLabel.setText(newValue));
         });
         timeLabel.setText(cal.currentTime.get());
 
@@ -83,8 +77,7 @@ public class UI extends Application {
 
 
         deviceScreenBackgroundPane = new Pane();
-        BackgroundFill screenBackground = new BackgroundFill(Color.BLACK, new CornerRadii(0),
-                new Insets(0.0, 0.0, 0.0, 0.0));
+        BackgroundFill screenBackground = new BackgroundFill(Color.BLACK, new CornerRadii(0), new Insets(0.0, 0.0, 0.0, 0.0));
         deviceScreenBackgroundPane.setBackground(new Background(screenBackground));
         deviceScreenBackgroundPane.setMaxSize(113, 113);
         deviceScreenBackgroundPane.setMinSize(113, 113);
@@ -96,8 +89,7 @@ public class UI extends Application {
         mainBox.getChildren().add(deviceScreenBackgroundPane);
 
         Scene mainScene = new Scene(mainBox, 150, 286);
-        mainScene.getStylesheets().add
-                (getClass().getResource("resources/style.css").toExternalForm());
+        mainScene.getStylesheets().add(getClass().getResource("resources/style.css").toExternalForm());
         primaryStage.setTitle("FitBit");
         primaryStage.setScene(mainScene);
         primaryStage.setOnCloseRequest(event -> {
@@ -106,6 +98,7 @@ public class UI extends Application {
             heartHistory.heartMonitor.stopHeart();
             timerInstance.stopTimer();
             Platform.exit();
+            System.exit(0);
         });
         primaryStage.show();
     }
@@ -152,7 +145,6 @@ public class UI extends Application {
             Thread sleepHistoryThread = new Thread(sleepHistoryRunnable);
             sleepHistoryThread.start();
         }
-
         return grid;
     }
 
@@ -168,9 +160,7 @@ public class UI extends Application {
         imageView.setFitWidth(32);
         startHeartMonitorButton.setGraphic(imageView);
 
-        startHeartMonitorButton.setOnAction((actionEvent) -> {
-            mainBorderPane.setCenter(addActiveHeartMonitor());
-        });
+        startHeartMonitorButton.setOnAction((actionEvent) -> { mainBorderPane.setCenter(addActiveHeartMonitor()); });
         GridPane.setHalignment(startHeartMonitorButton, HPos.CENTER);
         GridPane.setValignment(startHeartMonitorButton, VPos.CENTER);
         grid.add(startHeartMonitorButton, 0, 1);
@@ -251,7 +241,6 @@ public class UI extends Application {
         grid.add(heartRateLabel, 0, 0);
         grid.add(btnSave, 0, 1);
         return grid;
-
     }
 
     public GridPane addSyncData() {
