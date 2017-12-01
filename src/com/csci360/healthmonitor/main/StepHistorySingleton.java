@@ -2,9 +2,6 @@ package com.csci360.healthmonitor.main;
 
 import java.util.ArrayList;
 
-/**
- * Created by Claudio on 20/11/2017.
- */
 public class StepHistorySingleton {
     private ArrayList<DailySteps> stepCounts = new ArrayList<DailySteps>();
     public Steps stepCounter = new Steps();
@@ -34,5 +31,9 @@ public class StepHistorySingleton {
      */
     public DailySteps getDailyCount(int index) {
         return stepCounts.get(index);
+    }
+
+    public int historySize() {
+        return stepCounts.size();
     }
 }

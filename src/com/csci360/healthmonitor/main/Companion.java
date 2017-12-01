@@ -1,8 +1,5 @@
 package com.csci360.healthmonitor.main;
 
-/**
- * Created by Claudio on 20/11/2017.
- */
 public class Companion {
     private boolean connected;
 

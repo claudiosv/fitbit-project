@@ -2,9 +2,6 @@ package com.csci360.healthmonitor.main;
 
 import java.util.Random;
 
-/**
- * Created by Claudio on 20/11/2017.
- */
 public class Accelerometer implements Sensors<Integer> {
     //Is reading from sensor
     public boolean isReading = false;

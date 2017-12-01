@@ -2,17 +2,16 @@ package com.csci360.healthmonitor.main;
 
 import java.util.Date;
 
-/**
- * Created by Claudio on 20/11/2017.
- */
 public class SyncSingleton {
     private Companion companionDevice;
     private UserSingleton deviceUser;
     private static SyncSingleton instance = null;
+    private boolean syncComplete;
 
     protected SyncSingleton() {
         companionDevice = new Companion();
         deviceUser = deviceUser.getInstance();
+        syncComplete = false;
     }
 
     public static SyncSingleton getInstance() {
@@ -52,6 +51,7 @@ public class SyncSingleton {
      * @param ourData
      */
     public void syncData(String ourData) {
+        syncComplete = false;
         Runnable syncThread = new Runnable() {
             public void run() {
                 try {
@@ -59,11 +59,14 @@ public class SyncSingleton {
                         System.out.println("Send Failed");
                     }
 
-                    Thread.sleep(2500); //Sleep two and a half seconds to simulate the syncSingleton
+                    Thread.sleep(2500); //Sleep two and a half seconds to simulate the sync process
 
                     String recvData = companionDevice.receive();
                     if(recvData == null) {
                         System.out.println("Receive Failed");
+                    }
+                    else {
+                        syncComplete = true;
                     }
 
                     parseIncomingData(recvData);
@@ -76,5 +79,13 @@ public class SyncSingleton {
 
         Thread syncDevice = new Thread(syncThread);
         syncDevice.start();
+    }
+
+    /**
+     * returns is the sync process completed
+     * @return
+     */
+    public boolean successful() {
+        return this.syncComplete;
     }
 }

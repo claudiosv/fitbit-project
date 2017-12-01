@@ -2,9 +2,6 @@ package com.csci360.healthmonitor.main;
 
 import javafx.beans.property.SimpleDoubleProperty;
 
-/**
- * Created by Claudio on 20/11/2017.
- */
 public class Heart {
     private Thread heartThread = null;
     private HeartMonitor heart = null;

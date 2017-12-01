@@ -2,9 +2,6 @@ package com.csci360.healthmonitor.main;
 
 import java.util.ArrayList;
 
-/**
- * Created by Claudio on 20/11/2017.
- */
 public class HeartHistorySingleton {
     private ArrayList<HeartRate> heartRates = new ArrayList<>();
     public Heart heartMonitor = new Heart();
@@ -36,5 +33,13 @@ public class HeartHistorySingleton {
      */
     public HeartRate getHeartRate(int index) {
         return heartRates.get(index);
+    }
+
+    /**
+     * returns the number of heartrates that are saved
+     * @return
+     */
+    public int historySize() {
+        return heartRates.size();
     }
 }

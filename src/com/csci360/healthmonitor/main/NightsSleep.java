@@ -2,9 +2,6 @@ package com.csci360.healthmonitor.main;
 
 import java.util.Date;
 
-/**
- * Created by Claudio on 20/11/2017.
- */
 public class NightsSleep {
     public Date sleepTime;
     public Date wakeTime;

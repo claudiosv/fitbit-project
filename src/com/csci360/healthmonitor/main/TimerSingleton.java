@@ -3,9 +3,6 @@ package com.csci360.healthmonitor.main;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-/**
- * Created by Claudio on 20/11/2017.
- */
 public class TimerSingleton {
     private boolean timerCounting;
     private SimpleIntegerProperty remainingTime;
@@ -19,8 +16,6 @@ public class TimerSingleton {
     public SimpleIntegerProperty remainingTimeProperty() {
         return remainingTime;
     }
-
-
 
     public static TimerSingleton getInstance() {
         if(instance == null) {
@@ -51,8 +46,8 @@ public class TimerSingleton {
             public void run() {
                 try {
                     while (remainingTime.get() > 0 && timerCounting) {
-                        remainingTime.setValue(remainingTime.get() - 1);
                         Thread.sleep(1000);
+                        remainingTime.setValue(remainingTime.get() - 1);
                     }
                 }
                 catch(InterruptedException e) {
@@ -75,5 +70,6 @@ public class TimerSingleton {
      */
     public void stopTimer() {
         timerCounting = false;
+        remainingTime.set(0);
     }
 }

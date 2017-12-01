@@ -2,9 +2,6 @@ package com.csci360.healthmonitor.main;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-/**
- * Created by Claudio on 20/11/2017.
- */
 public class Steps {
     private static final int walkingSpeed = 500;
 

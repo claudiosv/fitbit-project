@@ -2,9 +2,6 @@ package com.csci360.healthmonitor.main;
 
 import java.util.ArrayList;
 
-/**
- * Created by Claudio on 20/11/2017.
- */
 public class SleepHistorySingleton {
     public ArrayList<NightsSleep> sleepTimes = new ArrayList<>();
     public SleepTracker sleepTracker = new SleepTracker();
@@ -26,5 +23,9 @@ public class SleepHistorySingleton {
 
     public NightsSleep getSleepTimes(int index) {
         return sleepTimes.get(index);
+    }
+
+    public int historySize() {
+        return sleepTimes.size();
     }
 }

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="claudioAlexHealthMonitor:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/claudioAlexHealthMonitor_jar</output-path>
+    <root id="archive" name="claudioAlexHealthMonitor.jar">
+      <element id="module-output" name="claudioAlexHealthMonitor" />
+    </root>
+  </artifact>
+</component>

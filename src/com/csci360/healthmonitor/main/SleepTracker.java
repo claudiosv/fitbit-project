@@ -2,9 +2,6 @@ package com.csci360.healthmonitor.main;
 
 import java.util.Date;
 
-/**
- * Created by Claudio on 20/11/2017.
- */
 public class SleepTracker {
     private static final int sleepSpeed = 1000;
 
