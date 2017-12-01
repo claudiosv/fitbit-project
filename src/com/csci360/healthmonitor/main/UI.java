@@ -1,17 +1,5 @@
 package com.csci360.healthmonitor.main;
 
-//TODO: redesign classes and packages
-/*
-Reorganise into folders/packages
-Rename some files
-Consider GRASP principles more
-Make builders and factories
-Be more clear about Memento and Observer pattern
-Implement State pattern for UI screens
-Apply more MVC i.e. screens and parts need to be seen as views
- */
-//TODO: unit testing
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
@@ -40,6 +28,87 @@ public class UI extends Application {
     private Pane deviceScreenBackgroundPane;
     private Button backButton;
     private BorderPane mainBorderPane;
+
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        mainBorderPane = new BorderPane();
+        backButton = new Button();
+        backButton.setVisible(false);
+
+        Image imageBack = new Image(getClass().getResourceAsStream("resources/back.png"));
+        ImageView imageViewBack = new ImageView(imageBack);
+        imageViewBack.setFitHeight(12);
+        imageViewBack.setFitWidth(12);
+        backButton.setGraphic(imageViewBack);
+        backButton.setStyle(
+                "-fx-min-width: 16px; " +
+                        "-fx-min-height: 16px; " +
+                        "-fx-max-width: 16px; " +
+                        "-fx-max-height: 16px;"
+        );
+        backButton.setOnAction(event -> {
+                    mainBorderPane.setCenter(addHomeScreen());
+                    backButton.setVisible(false);
+                }
+        );
+
+        Label timeLabel = new Label("10:00 AM");
+
+        CalendarObservable cal = new CalendarObservable();
+        cal.currentTime.addListener((observable, oldValue, newValue) -> {
+
+            Platform.runLater(() ->
+                    timeLabel.setText(newValue)
+            );
+
+        });
+        timeLabel.setText(cal.currentTime.get());
+
+        HBox statusBarBox = new HBox();
+        statusBarBox.setPadding(new Insets(2, 2, 2, 2));
+        Region spacerRegion = new Region();
+        spacerRegion.setPrefWidth(20);
+        statusBarBox.getChildren().add(backButton);
+        statusBarBox.getChildren().add(spacerRegion);
+        statusBarBox.getChildren().add(timeLabel);
+
+        mainBorderPane.setTop(statusBarBox);
+        mainBorderPane.setCenter(addHomeScreen());
+
+        Pane mainBox = new Pane();
+        Image watchBackground = new Image(getClass().getResourceAsStream("resources/watch.jpg"));
+        BackgroundImage backgroundImage = new BackgroundImage(watchBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        mainBox.setBackground(new Background(backgroundImage));
+
+
+        deviceScreenBackgroundPane = new Pane();
+        BackgroundFill screenBackground = new BackgroundFill(Color.BLACK, new CornerRadii(0),
+                new Insets(0.0, 0.0, 0.0, 0.0));
+        deviceScreenBackgroundPane.setBackground(new Background(screenBackground));
+        deviceScreenBackgroundPane.setMaxSize(113, 113);
+        deviceScreenBackgroundPane.setMinSize(113, 113);
+        deviceScreenBackgroundPane.setMaxSize(116, 116);
+        deviceScreenBackgroundPane.setMinSize(116, 116);
+        deviceScreenBackgroundPane.setLayoutX(17);
+        deviceScreenBackgroundPane.setLayoutY(85);
+        deviceScreenBackgroundPane.getChildren().add(mainBorderPane);
+        mainBox.getChildren().add(deviceScreenBackgroundPane);
+
+        Scene mainScene = new Scene(mainBox, 150, 286);
+        mainScene.getStylesheets().add
+                (getClass().getResource("resources/style.css").toExternalForm());
+        primaryStage.setTitle("FitBit");
+        primaryStage.setScene(mainScene);
+        primaryStage.setOnCloseRequest(event -> {
+            stepHistory.stepCounter.stopCounter();
+            sleepHistory.sleepTracker.stopSleepTracker();
+            heartHistory.heartMonitor.stopHeart();
+            timerInstance.stopTimer();
+            Platform.exit();
+        });
+        primaryStage.show();
+    }
 
     public GridPane addSleepTracker() {
         GridPane grid = new GridPane();
@@ -92,19 +161,19 @@ public class UI extends Application {
         grid.setHgap(5);
         grid.setVgap(5);
         grid.setPadding(new Insets(16, 16, 16, 32));
-        Button btn1 = new Button();
+        Button startHeartMonitorButton = new Button();
         Image imageDecline = new Image(getClass().getResourceAsStream("resources/heartbeat.png"));
         ImageView imageView = new ImageView(imageDecline);
         imageView.setFitHeight(32);
         imageView.setFitWidth(32);
-        btn1.setGraphic(imageView);
+        startHeartMonitorButton.setGraphic(imageView);
 
-        btn1.setOnAction((actionEvent) -> {
+        startHeartMonitorButton.setOnAction((actionEvent) -> {
             mainBorderPane.setCenter(addActiveHeartMonitor());
         });
-        GridPane.setHalignment(btn1, HPos.CENTER);
-        GridPane.setValignment(btn1, VPos.CENTER);
-        grid.add(btn1, 0, 1);
+        GridPane.setHalignment(startHeartMonitorButton, HPos.CENTER);
+        GridPane.setValignment(startHeartMonitorButton, VPos.CENTER);
+        grid.add(startHeartMonitorButton, 0, 1);
 
         return grid;
     }
@@ -115,10 +184,9 @@ public class UI extends Application {
         grid.setVgap(5);
         grid.setPadding(new Insets(0, 5, 0, 5));
 
-        Label category = new Label();
-        category.setWrapText(true);
-
-        category.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+        Label heartRateLabel = new Label();
+        heartRateLabel.setWrapText(true);
+        heartRateLabel.setFont(Font.font("Arial", FontWeight.BOLD, 15));
 
         Button btnStop = new Button();
         Image imageStop = new Image(getClass().getResourceAsStream("resources/stop.png"));
@@ -143,13 +211,13 @@ public class UI extends Application {
             heartHistory.heartMonitor.resetHeart();
         });
 
-        grid.add(category, 0, 0, 3, 1);
+        grid.add(heartRateLabel, 0, 0, 3, 1);
         grid.add(btnStop, 0, 2);
         grid.add(btnReset, 1, 2);
 
         if (heartHistory.heartMonitor.startHeart()) {
             heartHistory.heartMonitor.bpmProperty().addListener((observable, oldValue, newValue) -> {
-                Platform.runLater(() -> category.setText(String.format("%.0f bpm", newValue)));
+                Platform.runLater(() -> heartRateLabel.setText(String.format("%.0f bpm", newValue)));
             });
         }
 
@@ -162,11 +230,11 @@ public class UI extends Application {
         grid.setVgap(5);
         grid.setPadding(new Insets(0, 5, 0, 5));
 
-        Label category = new Label(String.format("%.0f bpm", heartHistory.heartMonitor.bpmProperty().get()));
-        category.setWrapText(true);
-        category.setFont(Font.font("Arial", FontWeight.BOLD, 15));
-        category.setMaxWidth(113);
-        category.setVisible(true);
+        Label heartRateLabel = new Label(String.format("%.0f bpm", heartHistory.heartMonitor.bpmProperty().get()));
+        heartRateLabel.setWrapText(true);
+        heartRateLabel.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+        heartRateLabel.setMaxWidth(113);
+        heartRateLabel.setVisible(true);
 
         Button btnSave = new Button();
         Image imageSave = new Image(getClass().getResourceAsStream("resources/save.png"));
@@ -178,9 +246,9 @@ public class UI extends Application {
         btnSave.setOnAction((actionEvent) -> {
             heartHistory.addHeartRate(heartHistory.heartMonitor.saveHeartRate());
             heartHistory.heartMonitor.resetHeart();
-            category.setText("Saved successfully");
+            heartRateLabel.setText("Saved successfully");
         });
-        grid.add(category, 0, 0);
+        grid.add(heartRateLabel, 0, 0);
         grid.add(btnSave, 0, 1);
         return grid;
 
@@ -192,23 +260,22 @@ public class UI extends Application {
         grid.setVgap(5);
         grid.setPadding(new Insets(0, 5, 0, 5));
 
-        Label category = new Label();
-        category.setWrapText(true);
-        category.setMaxWidth(113);
-
-        category.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+        Label syncStatusLabel = new Label();
+        syncStatusLabel.setWrapText(true);
+        syncStatusLabel.setMaxWidth(113);
+        syncStatusLabel.setFont(Font.font("Arial", FontWeight.BOLD, 10));
         if (syncInstance.addCompanion()) {
             Runnable syncRunnable = () -> {
                 try {
                     System.out.println("Starting the syncInstance process");
-                    Platform.runLater(() -> category.setText("Starting the syncInstance process"));
+                    Platform.runLater(() -> syncStatusLabel.setText("Starting the syncInstance process"));
                     syncInstance.syncData("Empty Data to send");
 
                     Thread.sleep(2550);
                     System.out.println("SyncSingleton process completed");
-                    Platform.runLater(() -> category.setText("SyncSingleton process completed"));
+                    Platform.runLater(() -> syncStatusLabel.setText("SyncSingleton process completed"));
 
-                    Platform.runLater(() -> category.setText("Username: " + userInstance.username + "\nGender: " + userInstance.getGender() +
+                    Platform.runLater(() -> syncStatusLabel.setText("Username: " + userInstance.username + "\nGender: " + userInstance.getGender() +
                             "\nBirthday: " + userInstance.getBirthday() + "\nHeight: " + userInstance.getHeight() + "\nWeight: " + userInstance.getWeight()));
 
 
@@ -226,9 +293,7 @@ public class UI extends Application {
             Thread syncThread = new Thread(syncRunnable);
             syncThread.start();
         }
-        grid.add(category, 0, 0);
-
-
+        grid.add(syncStatusLabel, 0, 0);
         return grid;
     }
 
@@ -238,7 +303,7 @@ public class UI extends Application {
         grid.setVgap(5);
         grid.setPadding(new Insets(0, 5, 0, 5));
         Button btnStop = new Button();
-        Label category = new Label("100 secs");
+        Label timerLabel = new Label("100 secs");
         Slider slider = new Slider();
         slider.setMin(1);
         slider.setMax(300);
@@ -252,14 +317,14 @@ public class UI extends Application {
         slider.setMinWidth(100);
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
             slider.setValue(newValue.intValue());
-            category.setText(String.format("%.0f secs", newValue));
+            timerLabel.setText(String.format("%.0f secs", newValue));
         });
-        category.setWrapText(true);
+        timerLabel.setWrapText(true);
 
-        category.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+        timerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 15));
         Button startTimerButton = new Button();
-        Image imageDecline = new Image(getClass().getResourceAsStream("resources/play-button.png"));
-        ImageView imageView = new ImageView(imageDecline);
+        Image imageStartTimer = new Image(getClass().getResourceAsStream("resources/play-button.png"));
+        ImageView imageView = new ImageView(imageStartTimer);
         imageView.setFitHeight(16);
         imageView.setFitWidth(16);
         startTimerButton.setGraphic(imageView);
@@ -271,7 +336,7 @@ public class UI extends Application {
                     slider.setVisible(true);
                 });
             } else {
-                Platform.runLater(() -> category.setText(String.format("%d secs", newValue.intValue())));
+                Platform.runLater(() -> timerLabel.setText(String.format("%d secs", newValue.intValue())));
             }
         });
         startTimerButton.setOnAction(event -> {
@@ -296,7 +361,7 @@ public class UI extends Application {
         grid.add(slider, 0, 1);
         grid.add(startTimerButton, 0, 2);
         grid.add(btnStop, 0, 2);
-        grid.add(category, 0, 0, 3, 1);
+        grid.add(timerLabel, 0, 0, 3, 1);
 
 
         return grid;
@@ -309,14 +374,14 @@ public class UI extends Application {
         grid.setVgap(5);
         grid.setPadding(new Insets(0, 5, 0, 5));
 
-        Label category = new Label("Timer completed");
+        Label timerCompletedLabel = new Label("Timer completed");
 
-        category.setMaxWidth(113);
-        category.setWrapText(true);
+        timerCompletedLabel.setMaxWidth(113);
+        timerCompletedLabel.setWrapText(true);
 
-        category.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        timerCompletedLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
-        grid.add(category, 0, 0);
+        grid.add(timerCompletedLabel, 0, 0);
 
 
         return grid;
@@ -499,85 +564,5 @@ public class UI extends Application {
         grid.setBackground(new Background(gridBackground));
 
         return grid;
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        mainBorderPane = new BorderPane();
-        backButton = new Button();
-        backButton.setVisible(false);
-
-        Image imageBack = new Image(getClass().getResourceAsStream("resources/back.png"));
-        ImageView imageViewBack = new ImageView(imageBack);
-        imageViewBack.setFitHeight(12);
-        imageViewBack.setFitWidth(12);
-        backButton.setGraphic(imageViewBack);
-        backButton.setStyle(
-                "-fx-min-width: 16px; " +
-                        "-fx-min-height: 16px; " +
-                        "-fx-max-width: 16px; " +
-                        "-fx-max-height: 16px;"
-        );
-        backButton.setOnAction(event -> {
-                    mainBorderPane.setCenter(addHomeScreen());
-                    backButton.setVisible(false);
-                }
-        );
-
-        Label timeLabel = new Label("10:00 AM");
-
-        CalendarObservable cal = new CalendarObservable();
-        cal.currentTime.addListener((observable, oldValue, newValue) -> {
-
-            Platform.runLater(() ->
-                    timeLabel.setText(newValue)
-            );
-
-        });
-        timeLabel.setText(cal.currentTime.get());
-
-        HBox statusBarBox = new HBox();
-        statusBarBox.setPadding(new Insets(2, 2, 2, 2));
-        Region spacerRegion = new Region();
-        spacerRegion.setPrefWidth(20);
-        statusBarBox.getChildren().add(backButton);
-        statusBarBox.getChildren().add(spacerRegion);
-        statusBarBox.getChildren().add(timeLabel);
-
-        mainBorderPane.setTop(statusBarBox);
-        mainBorderPane.setCenter(addHomeScreen());
-
-        Pane mainBox = new Pane();
-        Image watchBackground = new Image(getClass().getResourceAsStream("resources/watch.jpg"));
-        BackgroundImage backgroundImage = new BackgroundImage(watchBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        mainBox.setBackground(new Background(backgroundImage));
-
-
-        deviceScreenBackgroundPane = new Pane();
-        BackgroundFill screenBackground = new BackgroundFill(Color.BLACK, new CornerRadii(0),
-                new Insets(0.0, 0.0, 0.0, 0.0));
-        deviceScreenBackgroundPane.setBackground(new Background(screenBackground));
-        deviceScreenBackgroundPane.setMaxSize(113, 113);
-        deviceScreenBackgroundPane.setMinSize(113, 113);
-        deviceScreenBackgroundPane.setMaxSize(116, 116);
-        deviceScreenBackgroundPane.setMinSize(116, 116);
-        deviceScreenBackgroundPane.setLayoutX(17);
-        deviceScreenBackgroundPane.setLayoutY(85);
-        deviceScreenBackgroundPane.getChildren().add(mainBorderPane);
-        mainBox.getChildren().add(deviceScreenBackgroundPane);
-
-        Scene mainScene = new Scene(mainBox, 150, 286);
-        mainScene.getStylesheets().add
-                (getClass().getResource("resources/style.css").toExternalForm());
-        primaryStage.setTitle("FitBit");
-        primaryStage.setScene(mainScene);
-        primaryStage.setOnCloseRequest(event -> {
-            stepHistory.stepCounter.stopCounter();
-            sleepHistory.sleepTracker.stopSleepTracker();
-            heartHistory.heartMonitor.stopHeart();
-            timerInstance.stopTimer();
-            Platform.exit();
-        });
-        primaryStage.show();
     }
 }
