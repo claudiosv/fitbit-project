@@ -9,17 +9,6 @@
     <list default="true" id="6091dcef-9972-4142-aa7f-488cb285228d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.classpath" afterPath="$PROJECT_DIR$/.classpath" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/claudioAlexHealthMonitor.iml" afterPath="$PROJECT_DIR$/claudioAlexHealthMonitor.iml" />
-      <change beforePath="$PROJECT_DIR$/src/com/csci360/healthmonitor/main/Main.java" afterPath="$PROJECT_DIR$/src/com/csci360/healthmonitor/main/Main.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/csci360/healthmonitor/main/UI.java" afterPath="$PROJECT_DIR$/src/com/csci360/healthmonitor/main/UI.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/csci360/healthmonitor/main/com/csci360/healthmonitor/test/MainTest.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/com/csci360/healthmonitor/test/AccelerometerTest.java" afterPath="$PROJECT_DIR$/src/tests/AccelerometerTest.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/csci360/healthmonitor/test/HeartHistorySingletonTest.java" afterPath="$PROJECT_DIR$/src/tests/HeartHistorySingletonTest.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/csci360/healthmonitor/test/HeartMonitorTest.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/com/csci360/healthmonitor/test/SleepHistorySingletonTest.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/com/csci360/healthmonitor/test/StepHistorySingletonTest.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/com/csci360/healthmonitor/test/SyncSingletonTest.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/com/csci360/healthmonitor/test/TimerSingletonTest.java" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path=".idea/workspace.xml" />
@@ -35,8 +24,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/csci360/healthmonitor/main/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+            <state relative-caret-position="60">
+              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
               <folding>
                 <element signature="e#144#145#0" expanded="true" />
                 <element signature="e#194#195#0" expanded="true" />
@@ -172,9 +161,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -203,7 +191,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -460,9 +449,9 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.StepHistorySingletonTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.HeartMonitorTest" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.AccelerometerTest" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.AccelerometerTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.StepHistorySingletonTest" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.HeartMonitorTest" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.TimerSingletonTest" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.SyncSingletonTest" />
       </list>
@@ -496,7 +485,8 @@
       <workItem from="1511911071143" duration="368000" />
       <workItem from="1512079549458" duration="31000" />
       <workItem from="1512147160765" duration="8147000" />
-      <workItem from="1512168325550" duration="581000" />
+      <workItem from="1512168325550" duration="767000" />
+      <workItem from="1512170033227" duration="47000" />
     </task>
     <task id="LOCAL-00001" summary="Implemented the Timer and the Step classes. Lightly tested with printf no asserts">
       <created>1511634809165</created>
@@ -610,13 +600,17 @@
       <option name="project" value="LOCAL" />
       <updated>1511880819584</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Tests are working again, other small changes. Refactored structure to hopefully allow eclipse">
+      <created>1512168984796</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1512168984796</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="AccelerometerTest - 2017.12.01 at 17h 47m 38s.xml">
-      <configuration name="AccelerometerTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="AccelerometerTest - 2017.12.01 at 17h 48m 59s.xml">
       <configuration name="AccelerometerTest" configurationId="JUnit" />
     </history-entry>
@@ -627,6 +621,9 @@
       <configuration name="AccelerometerTest" configurationId="JUnit" />
     </history-entry>
     <history-entry file="AccelerometerTest - 2017.12.01 at 17h 52m 25s.xml">
+      <configuration name="AccelerometerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AccelerometerTest - 2017.12.01 at 18h 14m 25s.xml">
       <configuration name="AccelerometerTest" configurationId="JUnit" />
     </history-entry>
     <history-entry file="HeartMonitorTest - 2017.12.01 at 17h 52m 49s.xml">
@@ -646,7 +643,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38596000" />
+    <option name="totallyTimeSpent" value="38829000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -674,9 +671,8 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10520833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32994923" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -688,6 +684,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32994923" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -753,7 +750,8 @@
     <MESSAGE value="changed to FitBit" />
     <MESSAGE value="Try to ignore again." />
     <MESSAGE value="Fix sync typo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix sync typo" />
+    <MESSAGE value="Tests are working again, other small changes. Refactored structure to hopefully allow eclipse" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tests are working again, other small changes. Refactored structure to hopefully allow eclipse" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -827,13 +825,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/csci360/healthmonitor/test/CompanionTest.java" />
     <entry file="file://$PROJECT_DIR$/src/com/csci360/healthmonitor/test/DailyStepsTest.java" />
     <entry file="file://$PROJECT_DIR$/src/com/csci360/healthmonitor/test/HeartTest.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/csci360/healthmonitor/main/com/csci360/healthmonitor/test/MainTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/csci360/healthmonitor/main/com/csci360/healthmonitor/test/MainTest.java" />
     <entry file="file://$PROJECT_DIR$/src/com/csci360/healthmonitor/test/Testing.java" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -1066,8 +1058,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/csci360/healthmonitor/main/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        <state relative-caret-position="60">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
           <folding>
             <element signature="e#144#145#0" expanded="true" />
             <element signature="e#194#195#0" expanded="true" />
