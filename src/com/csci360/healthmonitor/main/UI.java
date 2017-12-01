@@ -267,13 +267,13 @@ public class UI extends Application {
         if (syncInstance.addCompanion()) {
             Runnable syncRunnable = () -> {
                 try {
-                    System.out.println("Starting the syncInstance process");
-                    Platform.runLater(() -> syncStatusLabel.setText("Starting the syncInstance process"));
+                    System.out.println("Starting the sync process");
+                    Platform.runLater(() -> syncStatusLabel.setText("Starting the sync process"));
                     syncInstance.syncData("Empty Data to send");
 
                     Thread.sleep(2550);
-                    System.out.println("SyncSingleton process completed");
-                    Platform.runLater(() -> syncStatusLabel.setText("SyncSingleton process completed"));
+                    System.out.println("Sync process completed");
+                    Platform.runLater(() -> syncStatusLabel.setText("Sync process completed"));
 
                     Platform.runLater(() -> syncStatusLabel.setText("Username: " + userInstance.username + "\nGender: " + userInstance.getGender() +
                             "\nBirthday: " + userInstance.getBirthday() + "\nHeight: " + userInstance.getHeight() + "\nWeight: " + userInstance.getWeight()));
